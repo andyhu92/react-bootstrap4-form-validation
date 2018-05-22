@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ValidationForm /> should accept dom properties and match previous snapshot 1`] = `
+<form
+  class="custom-class"
+  data-custom="5"
+  id="form"
+  novalidate=""
+  style="color:red;font-size:16px"
+/>
+`;
+
+exports[`<ValidationForm /> should has default class: needs-validation 1`] = `
+<form
+  class="needs-validation"
+  novalidate=""
+/>
+`;

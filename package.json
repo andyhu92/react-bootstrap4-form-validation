@@ -1,0 +1,62 @@
+{
+  "name": "react-bootstrap4-validation-form",
+  "version": "1.0.0",
+  "description": "Simple React Components for form validation. Based on HTML5 Constraint validation API and Bootstrap4 style.",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run lib:watch\" \"npm run docs\"",
+    "lib": "babel src/lib -d lib --copy-files",
+    "lib:watch": "babel src/lib -w -d lib --copy-files",
+    "docs": "webpack-dev-server --mode development",
+    "docs:prod": "webpack --mode production",
+    "test": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/jestsetup.jsx"
+    ]
+  },
+  "keywords": ["React","React Component","Form Validation", "Bootstrap", "HTML5"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^15.3.0 || ^16.2.0",
+    "react-dom": "^15.3.0 || ^16.2.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^22.4.4",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.11",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^21.3.0-beta.15",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-test-renderer": "^16.3.2",
+    "regenerator-runtime": "^0.11.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "webpack-dev-server": "^3.1.3"
+  },
+  "author": "Cihang Hu <cihanghu@gmail.com>",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "prop-types": "^15.6.1"
+  }
+}

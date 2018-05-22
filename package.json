@@ -4,7 +4,7 @@
   "description": "Simple React Components for form validation. Based on HTML5 Constraint validation API and Bootstrap4 style.",
   "main": "lib/index.js",
   "scripts": {
-    "dev": "concurrently \"npm run lib:watch\" \"npm run docs\"",
+    "start": "concurrently \"npm run lib:watch\" \"npm run docs\"",
     "lib": "babel src/lib -d lib --copy-files",
     "lib:watch": "babel src/lib -w -d lib --copy-files",
     "docs": "webpack-dev-server --mode development",
@@ -17,7 +17,13 @@
       "./test/jestsetup.jsx"
     ]
   },
-  "keywords": ["React","React Component","Form Validation", "Bootstrap", "HTML5"],
+  "keywords": [
+    "React",
+    "React Component",
+    "Form Validation",
+    "Bootstrap",
+    "HTML5"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "react": "^15.3.0 || ^16.2.0",
@@ -51,10 +57,10 @@
     "webpack-dev-server": "^3.1.3"
   },
   "author": "Cihang Hu <cihanghu@gmail.com>",
-  "homepage": "",
+  "homepage": "https://github.com/andyhu92/react-bootstrap4-form-validation",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/andyhu92/react-bootstrap4-form-validation.git"
   },
   "dependencies": {
     "prop-types": "^15.6.1"

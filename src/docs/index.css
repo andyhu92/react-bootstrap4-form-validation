@@ -1,3 +1,28 @@
 code{
     border-radius: 5px;
 }
+
+aside {
+    height: 100%;
+    width: 260px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+aside a{
+    text-decoration: none;
+    color:white;
+}
+
+aside a.brand:hover{
+    text-decoration: none;
+}
+
+aside a:hover{
+    color:white;
+}

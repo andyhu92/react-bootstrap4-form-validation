@@ -159,7 +159,7 @@ export class BaseFormControl extends React.Component {
    //Filter out non-DOM attribute
    filterProps = () => {
        let {
-           errorMessage, attachToForm, detachFromForm, setFormDirty, label, immediate, inline, multiline, buttonBody, onButtonClick,
+           errorMessage, attachToForm, detachFromForm, setFormDirty, label, immediate, inline, buttonBody, onButtonClick,
            ...rest
        } = this.props;
        return rest;
@@ -173,8 +173,8 @@ export class TextInput extends BaseFormControl {
        multiline:false
    }
    render() {
-       let domProps = this.filterProps();
-       let { multiline } = this.props;
+       let props = this.filterProps();
+       let { multiline, ...domProps } = props;
        return (
            <React.Fragment>
                { multiline ?
@@ -188,18 +188,19 @@ export class TextInput extends BaseFormControl {
 }
 
 export class TextInputGroup extends BaseFormControl {
-   static defaultProps = {
-       buttonBody:null
-   }
+    static defaultProps = {
+        ...BaseFormControl.defaultProps,
+        className:"form-control",
+    }
    render() {
-       let domProps = this.filterProps();
+       let props = this.filterProps();
+       let { prepend, append, ...domProps } = props;
        return (
            <React.Fragment>
                <div className="input-group">
-                   <input {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
-                       <div className="input-group-append">
-                       <button className="btn btn-outline-secondary" type="button"> { this.props.buttonBody }</button>
-                   </div>
+                   { prepend && <div className="input-group-prepend">{ prepend }</div>}
+                   <input {...domProps} className={this.props.className} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
+                   { append && <div className="input-group-append">{ append }</div>}
                </div>
                {this.state.errorMessage && <span className="invalid-feedback d-block">{this.state.errorMessage}</span>}
            </React.Fragment>

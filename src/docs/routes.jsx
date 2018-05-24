@@ -17,7 +17,9 @@ export default [
             { pathname:'text-input-group', text:"TextInputGroup"},
             { pathname:'radio-group', text:"RadioGroup"},
             { pathname:'check-box', text:"Checkbox"},
-            { pathname:'select-group', text:"SelectGroup"}
+            { pathname:'select-group', text:"SelectGroup"},
+            { pathname:'file-input', text:"FileInput"},
+            { pathname:'base-form-control', text:"BaseFormControl"},
         ]
     }
 ]

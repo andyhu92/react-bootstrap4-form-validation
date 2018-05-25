@@ -3,11 +3,10 @@ import { shallow, render, mount } from 'enzyme';
 import { ValidationForm, TextInput } from '../lib'
 import toJson from "enzyme-to-json";
 
-const doNoThing = () => { };
 
 describe('<ValidationForm />', () => {
     it('should has default class: needs-validation', () => {
-        const wrapper = render(<ValidationForm onSubmit={doNoThing} />)
+        const wrapper = render(<ValidationForm onSubmit={doNothing} />)
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 
@@ -21,32 +20,34 @@ describe('<ValidationForm />', () => {
                 fontSize: 16
             }
         }
-        const wrapper = render(<ValidationForm onSubmit={doNoThing} {...domProps} />)
+        const wrapper = render(<ValidationForm onSubmit={doNothing} {...domProps} />)
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    it('should display default error message for fields', () => {
-        let defaultErrorMessage = {
-            required: "This field is required",
-            pattern: "Input value does not match the pattern",
-            type: "Input value does not match the type",
-            minLength: "Please enter at least {minLength} characters",
-            min: "Number is too low",
-            max: "Number is too high"
-        };
+    it('should focus on first error input when submit', () => {
         const wrapper = mount(
-            <ValidationForm className="container" onSubmit={doNoThing} >
-                <div className="form-group">
-                    <TextInput name="firstName" required />
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">Submit</button>
-                </div>
+            <ValidationForm className="container" onSubmit={doNothing} >
+                <TextInput name="age"/>
+                <TextInput name="firstName" required id="firstName"/>
             </ValidationForm>)
         
-       wrapper.find("form").simulate("submit");
-       let requiredMEssage = <span className="invalid-feedback">{defaultErrorMessage.required}</span>
-   
-       expect(wrapper.containsMatchingElement(requiredMEssage)).toBe(true);
+        let fakeFocus = jest.fn();
+        wrapper.find("#firstName").at(1).getDOMNode().focus = fakeFocus
+        wrapper.find("form").simulate("submit");
+            
+        expect(fakeFocus).toHaveBeenCalled();
+    })
+
+    it('should not focus on first error input when submit if disable this feature', () => {
+        const wrapper = mount(
+            <ValidationForm className="container" onSubmit={doNothing} setFocusOnError={false}>
+                <TextInput name="age"/>
+                <TextInput name="firstName" required id="firstName"/>
+            </ValidationForm>)
+        
+        let fakeFocus = jest.fn();
+        wrapper.find("#firstName").at(1).getDOMNode().focus = fakeFocus
+        wrapper.find("form").simulate("submit");
+        expect(fakeFocus).not.toHaveBeenCalled();
     })
 });

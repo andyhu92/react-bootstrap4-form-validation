@@ -60,7 +60,8 @@ export class BaseFormControl extends React.Component {
            type: "Input value does not match the type",
            minLength: "Please enter at least {minLength} characters",
            min: "Number is too low",
-           max: "Number is too high"
+           max: "Number is too high",
+           validator:"Validator check failed"
        }
 
        let map = {
@@ -81,7 +82,6 @@ export class BaseFormControl extends React.Component {
        if (input) {
            let validityState = input.validity;
            let newErrorMessage = "";
-           let hasHTML5Error = false;
            for (let prop in validityState) {
                if (validityState[prop]) {
                    if ((prop === "rangeUnderflow" || prop === "rangeOverflow") && errorMessage["range"]) {
@@ -104,16 +104,33 @@ export class BaseFormControl extends React.Component {
                }
            }
 
+           if(typeof this.props.validator === "function"){
+               let validatorFn = this.props.validator;
+               let value = input.value;
+               if(!validatorFn(value)){
+                   input.setCustomValidity(errorMessage.validator);
+                   newErrorMessage = errorMessage.validator;
+               }else{
+                   input.setCustomValidity("");
+                   newErrorMessage="";
+               }
+           }
+
            this.setState({ errorMessage: newErrorMessage });
        }
    }
 
    getErrorMessage(errorMessage) {
-       return <span className="invalid-feedback">{errorMessage}</span>;
+       return <div className="invalid-feedback">{errorMessage}</div>;
    }
 
    displayErrorMessage() {
        return this.getErrorMessage(this.state.errorMessage);
+   }
+
+   displaySuccessMessage() {
+       return (!this.state.isPristine && !this.state.errorMessage && this.props.successMessage) ?
+        <div className="valid-feedback">{ this.props.successMessage }</div> : null;
    }
 
    checkError = (e) => {
@@ -159,7 +176,8 @@ export class BaseFormControl extends React.Component {
    //Filter out non-DOM attribute
    filterProps = () => {
        let {
-           errorMessage, attachToForm, detachFromForm, setFormDirty, label, immediate, inline, buttonBody, onButtonClick,
+           errorMessage, successMessage, validator,
+           attachToForm, detachFromForm, setFormDirty, label, immediate, inline, buttonBody, onButtonClick,
            ...rest
        } = this.props;
        return rest;
@@ -174,7 +192,7 @@ export class TextInput extends BaseFormControl {
    }
    render() {
        let props = this.filterProps();
-       let { multiline, ...domProps } = props;
+       let { multiline, successMessage, ...domProps } = props;
        return (
            <React.Fragment>
                { multiline ?
@@ -182,6 +200,7 @@ export class TextInput extends BaseFormControl {
                    <input className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
                }
                {this.displayErrorMessage()}
+               {this.displaySuccessMessage()}
            </React.Fragment>
        )
    }
@@ -202,7 +221,8 @@ export class TextInputGroup extends BaseFormControl {
                    <input {...domProps} className={this.props.className} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
                    { append && <div className="input-group-append">{ append }</div>}
                </div>
-               {this.state.errorMessage && <span className="invalid-feedback d-block">{this.state.errorMessage}</span>}
+               {this.state.errorMessage && <div className="invalid-feedback d-block">{this.state.errorMessage}</div>}
+               {this.displaySuccessMessage()}
            </React.Fragment>
        )
    }
@@ -241,7 +261,7 @@ export class RadioGroup extends BaseFormControl {
                        </label>
                    </div>
                ))}
-               {this.state.errorMessage && <span className="invalid-feedback d-block">{this.state.errorMessage}</span>}
+               {this.state.errorMessage && <div className="invalid-feedback">{this.state.errorMessage}</div>}
            </React.Fragment>
        )
    }

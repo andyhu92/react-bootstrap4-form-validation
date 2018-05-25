@@ -2,6 +2,10 @@ code{
     border-radius: 5px;
 }
 
+section{
+    padding-left:280px !important;
+}
+
 aside {
     height: 100%;
     width: 260px;
@@ -14,8 +18,14 @@ aside {
     padding-top: 20px;
 }
 
-aside a{
+aside a:not(.brand){
     text-decoration: none;
+    margin-left:25px;
+    text-align: left;
+    color:white;
+}
+
+a.brand{
     color:white;
 }
 

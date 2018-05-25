@@ -1,5 +1,5 @@
-import BasicUsage from './basicUsage';
-import FullExample from './fullExample';
+import BasicUsage from './examples/basicUsage';
+import FullExample from './examples/fullExample';
 
 export default [
     {

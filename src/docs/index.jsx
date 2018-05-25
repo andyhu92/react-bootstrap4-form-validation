@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './index.css';
 import Sidebar from './sideBar';
-import BasicUsage from './basicUsage';
+import BasicUsage from './examples/basicUsage';
 import Routes from './routes';
 
 class Demo extends React.Component {
@@ -21,7 +21,7 @@ class Demo extends React.Component {
       <Router>
         <main>
           <Sidebar />
-            <section className="container-fluid" style={{ marginTop: 120 }}>
+            <section className="container-fluid" >
               <Switch>
                 <Route path="/" exact component={BasicUsage}/>
                 

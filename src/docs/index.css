@@ -1,5 +1,11 @@
 code{
     border-radius: 5px;
+    margin-top:120px;
+}
+
+h4{
+    margin-top:46px;
+    margin-bottom:15px;
 }
 
 section{
@@ -23,6 +29,14 @@ aside a:not(.brand){
     margin-left:25px;
     text-align: left;
     color:white;
+}
+
+aside a:hover{
+    text-decoration: underline;
+}
+
+aside a.active{
+    text-decoration: underline;
 }
 
 a.brand{

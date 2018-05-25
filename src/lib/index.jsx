@@ -64,9 +64,10 @@ export class BaseFormControl extends React.Component {
         }
 
         let { errorMessage } = this.props;
+        let defaultErrorMessage = this.props.defaultErrorMessage || {};
         //If string was passed to errorMessage, default to required error Message
         if (typeof (errorMessage) === "string") errorMessage = { required: errorMessage };
-        errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, errorMessage); 
+        errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, defaultErrorMessage, errorMessage); 
 
         let input = this.getInputRef();
         if (input) {
@@ -163,7 +164,7 @@ export class BaseFormControl extends React.Component {
     //Filter out non-DOM attribute
     filterProps = () => {
         let {
-           errorMessage, successMessage, validator,
+           errorMessage, successMessage, validator, defaultErrorMessage,
             attachToForm, detachFromForm, setFormDirty, label, immediate, inline, buttonBody, onButtonClick,
             ...rest
        } = this.props;
@@ -218,22 +219,16 @@ export class TextInputGroup extends BaseFormControl {
 
 export class RadioGroup extends BaseFormControl {
     static defaultProps = {
-        labels: [],
-        ids: [],
-        values: [],
         inline: true,
         defaultValue: ""
     }
     static propTypes = {
-        labels: PropTypes.array.isRequired,
-        ids: PropTypes.array.isRequired,
-        values: PropTypes.array.isRequired,
         inline: PropTypes.bool,
         defaultValue: PropTypes.string
     }
 
     render() {
-        const { labels, ids, values, name, inline, required, defaultValue, disabled } = this.props;
+        const { name, inline, required, defaultValue } = this.props;
         return (
             <React.Fragment>
                 {labels.map((label, i) => (
@@ -249,6 +244,22 @@ export class RadioGroup extends BaseFormControl {
                     </div>
                 ))}
                 {this.state.errorMessage && <div className="invalid-feedback">{this.state.errorMessage}</div>}
+            </React.Fragment>
+        )
+    }
+}
+
+export class RadioItem extends BaseFormControl{
+    render () {
+        return (
+            <React.Fragment>
+                <input className="form-check-input" type="radio"
+                            onChange={this.handleChange}
+                            defaultChecked={values[i] === defaultValue}
+                            ref={this.inputRef} />
+                <label className="form-check-label" htmlFor={ids[i]}>
+                    {label}
+                </label>
             </React.Fragment>
         )
     }
@@ -398,6 +409,7 @@ export class ValidationForm extends React.Component {
                     attachToForm: this.attachToForm,
                     detachFromForm: this.detachFromForm,
                     immediate: this.props.immediate,
+                    defaultErrorMessage: this.props.defaultErrorMessage
                 });
             } else {
                 if (typeof child === 'string') return child;
@@ -501,7 +513,7 @@ export class ValidationForm extends React.Component {
     }
 
     render() {
-        let { onSubmit, onErrorSubmit, immediate, setFocusOnError, ...domProps } = this.props;
+        let { onSubmit, onErrorSubmit, immediate, setFocusOnError, defaultErrorMessage, ...domProps } = this.props;
         return (
             <form noValidate ref="form"
                 { ...domProps }

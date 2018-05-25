@@ -36,3 +36,13 @@ aside a.brand:hover{
 aside a:hover{
     color:white;
 }
+
+@media screen and (max-width:768px){
+    aside{
+        width:100%;
+        position:static;
+    }
+    section{
+        padding-left: 15px !important;
+    }
+}

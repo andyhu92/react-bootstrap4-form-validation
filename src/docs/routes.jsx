@@ -1,10 +1,13 @@
+import BasicUsage from './basicUsage';
+import FullExample from './fullExample';
+
 export default [
     {
         group:"Examples",
         path:"example",
         routes:[
-            { pathname:'basic-usage', text:'Basic Usage'},
-            { pathname:'full-usage', text:'Full Example'},
+            { pathname:'basic-usage', text:'Basic Usage', component: BasicUsage },
+            { pathname:'full-example', text:'Full Example', component: FullExample },
             { pathname:'custom-validation-control', text:'Custom Validation Control'},
         ]
     },

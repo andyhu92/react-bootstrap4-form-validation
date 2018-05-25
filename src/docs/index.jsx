@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './index.css';
 import Sidebar from './sideBar';
 import BasicUsage from './basicUsage';
@@ -21,18 +21,22 @@ class Demo extends React.Component {
       <Router>
         <main>
           <Sidebar />
-          <section className="container-fluid" style={{marginTop:120}}>
-            {
-              Routes.map(route => (
-                <Switch>
-                  {route.routes.map(r => (
-                    <Route path={`/${route.path}/${r.pathname}`} component={r.component} />
-                  ))}
-                </Switch>
-              ))
-            }
-          </section>
-
+            <section className="container-fluid" style={{ marginTop: 120 }}>
+              <Switch>
+                <Route path="/" exact component={BasicUsage}/>
+                
+                {
+                  Routes.map(route => (
+                    <React.Fragment>
+                      {route.routes.map(r => (
+                        <Route path={`/${route.path}/${r.pathname}`} component={r.component} />
+                      ))}
+                    </React.Fragment>
+                  ))
+                }
+                
+              </Switch>
+            </section>
         </main>
       </Router>
     );

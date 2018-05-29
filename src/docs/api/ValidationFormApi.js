@@ -36,7 +36,7 @@ export default class ValidationFormApi extends Component{
                                 <li><i>event:</i> Submit event targeting the form</li>
                                 <li><i>formData:</i> Serialized form data object. Key will be the input name.</li>
                                 <li><i>errorDetails:</i> Object contains input error details. Useful when building validation summary.<br/>
-                                    <b>key:</b> input name. <b>value:</b> <a href='https://developer.mozilla.org/en-US/docs/Web/API/ValidityState' target='_blank'>ValidityState</a>
+                                    <b>key:</b> input name. <b>value:</b> Reference to form control.You can get message from <code></code>
                                 </li>
                             </ul>
                         </div>
@@ -63,7 +63,7 @@ export default class ValidationFormApi extends Component{
             name:"defaultErrorMessage",
             type:"object",
             default:"{}",
-            description:<p>Default error message for the current instance of <code>ValidationForm</code>. See <Link to="/example/errorMessage">detailed explanation here.</Link></p>
+            description:<p>Default error message for the current instance of <code>ValidationForm</code>. See <Link to="/example/error-message">detailed explanation here.</Link></p>
         }
     ]
 
@@ -107,7 +107,8 @@ export default class ValidationFormApi extends Component{
 
                         <div className="form-group">
                             <label htmlFor="attachment">Attachment</label>
-                            <FileInput name="attachment" id="attachment"/>
+                            <FileInput name="attachment" id="attachment" required
+                                fileType={["pdf"]} maxFileSize="120 kb"/>
                         </div>
 
                         <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" />
@@ -132,6 +133,10 @@ export default class ValidationFormApi extends Component{
                         </div>
                     </div>
 
+                    <InfoBox>
+                            To make <code>ValidationForm</code> to work, the <code>name</code> attribute is required for all form controls for internal mapping.
+                    </InfoBox>
+
                   
                 </div>
                 <div className="col-md-7">
@@ -154,7 +159,8 @@ export default class ValidationFormApi extends Component{
 
     <div className="form-group">
         <label htmlFor="attachment">Attachment</label>
-        <FileInput name="attachment" id="attachment"/>
+        <FileInput name="attachment" id="attachment" required
+                fileType={["pdf"]} maxFileSize="120 kb"/>
     </div>
 
     <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" />

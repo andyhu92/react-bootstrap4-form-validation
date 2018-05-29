@@ -1,4 +1,5 @@
 import BasicUsage from './examples/basicUsage';
+import ErrorMessage from './examples/errorMessage';
 import FullExample from './examples/fullExample';
 import ValidationFormApi from './api/ValidationFormApi';
 
@@ -8,7 +9,7 @@ export default {
         path:"example",
         routes:[
             { pathname:'basic-usage', text:'Basic Usage', component: BasicUsage },
-            { pathname:'full-example', text:'Full Example', component: FullExample },
+            { pathname:'error-message', text:'Error Message', component: ErrorMessage },
             { pathname:'custom-validation-control', text:'Custom Validation Control'},
         ]
     },

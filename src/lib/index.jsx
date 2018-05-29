@@ -277,7 +277,8 @@ export class FileInput extends BaseFormControl {
     }
 
     handleChange = () => {
-        const { maxFileSize, fileType, errorMessage } = this.props;
+        let { maxFileSize, fileType, errorMessage = {} } = this.props;
+        errorMessage = Object.assign(ValidationForm.defaultErrorMessage, errorMessage);
         const inputRef = this.getInputRef();
         const file = inputRef.files[0];
         if (!file) return;
@@ -285,9 +286,9 @@ export class FileInput extends BaseFormControl {
         let newErrorMessage = "";
         let fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1).toLowerCase().trim();
         if (fileType.length > 0 && !fileType.includes(fileExtension)) {
-            newErrorMessage = errorMessage["fileType"] || `File type mismatch`;
+            newErrorMessage = errorMessage["fileType"];
         } else if (limit && file.size > limit) {
-            newErrorMessage = errorMessage["size"] || `File size exeed limit ${maxFileSize}`;
+            newErrorMessage = errorMessage["maxFileSize"];
         } else {
             newErrorMessage = "";
         }
@@ -347,11 +348,9 @@ export class Checkbox extends BaseFormControl {
         return (
             <div className={containerClassName} style={containerStyle}>
                 <input type="checkbox" className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} />
-
                 <label className="form-check-label" htmlFor={domProps.id}>
                     {this.props.label}
                 </label>
-
                 {this.displayErrorMessage()}
             </div>
         )
@@ -382,11 +381,9 @@ export class ValidationForm extends React.Component {
         minLength: "Please enter at least {minLength} characters",
         min: "Number is too low",
         max: "Number is too high",
+        fileType:"File type mismatch",
+        maxFileSize:"File size exceed limit",
         validator: "Validator check failed"
-    }
-
-    componentDidMount() {
-
     }
 
     inputs = {}
@@ -485,7 +482,7 @@ export class ValidationForm extends React.Component {
         inputs.forEach(input => {
             let inputRef = input.getInputRef();
             let validityState = inputRef.validity;
-            if(!validityState.valid) map[inputRef.name] = validityState;
+            if(!validityState.valid) map[inputRef.name] = input;
         })
         return map;
     }

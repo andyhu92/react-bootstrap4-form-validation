@@ -270,14 +270,10 @@ export class FileInput extends BaseFormControl {
         fileType: PropTypes.array,
         maxFileSize: PropTypes.string
     }
-    // Check file mime type here https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types
-    customfilterProps = () => {
-        let props = this.filterProps();
-        let {
-           maxFileSize, fileType,
-            ...rest
-           } = props;
-        return rest;
+
+    static defaultProps = {
+        ...BaseFormControl.defaultProps,
+        className: "form-control",
     }
 
     handleChange = () => {
@@ -300,7 +296,11 @@ export class FileInput extends BaseFormControl {
     }
 
     render() {
-        let domProps = this.customfilterProps();
+        let props = this.filterProps();
+        let {
+            maxFileSize, fileType,
+             ...domProps
+            } = props;
         return (
             <div>
                 <input {...domProps} ref={this.inputRef} type="file" onChange={this.handleChange} />
@@ -362,11 +362,13 @@ export class ValidationForm extends React.Component {
     static defaultProps = {
         className: "needs-validation",
         setFocusOnError: true,
-        immediate: true
+        immediate: true,
+        defaultErrorMessage:{}
     }
 
     static propTypes = {
         className: PropTypes.string,
+        defaultErrorMessage:PropTypes.object,
         setFocusOnError: PropTypes.bool,
         immediate: PropTypes.bool,
         onSubmit: PropTypes.func.isRequired,
@@ -478,6 +480,16 @@ export class ValidationForm extends React.Component {
         return inputs.find(input => !input.getInputRef().validity.valid);
     }
 
+    getErrorInputs = (inputs) => {
+        let map = {};
+        inputs.forEach(input => {
+            let inputRef = input.getInputRef();
+            let validityState = inputRef.validity;
+            if(!validityState.valid) map[inputRef.name] = validityState;
+        })
+        return map;
+    }
+
     handleSubmit = (event) => {
         let form = this.refs.form;
         let formData = this.getFormData();
@@ -488,8 +500,8 @@ export class ValidationForm extends React.Component {
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-
-            if (this.props.onErrorSubmit) this.props.onErrorSubmit(event, formData, inputArr)
+            
+            if (this.props.onErrorSubmit) this.props.onErrorSubmit(event, formData, this.getErrorInputs(inputArr));
             if (this.props.setFocusOnError) {
                 let firstErrorInput = this.findFirstErrorInput(inputArr);
                 firstErrorInput.getInputRef().focus();

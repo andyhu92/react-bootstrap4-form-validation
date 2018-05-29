@@ -7,11 +7,7 @@ export default class BasicUsage extends React.Component {
     componentDidMount() {
         initCodeSyntaxHighlight();
     }
-
-    handleSubmit = (e, formData) => {
-
-    }
-
+    
     render() {
         return (
             <div className="row">

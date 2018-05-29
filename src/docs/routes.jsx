@@ -1,8 +1,9 @@
 import BasicUsage from './examples/basicUsage';
 import FullExample from './examples/fullExample';
+import ValidationFormApi from './api/ValidationFormApi';
 
-export default [
-    {
+export default {
+    example: {
         group:"Examples",
         path:"example",
         routes:[
@@ -11,12 +12,12 @@ export default [
             { pathname:'custom-validation-control', text:'Custom Validation Control'},
         ]
     },
-    {
+    api: {
         group:"API",
         path:"api",
         routes:[
+            { pathname:'validation-form', text:'ValidationForm', component: ValidationFormApi},
             { pathname:'base-form-control', text:"Shared API"},
-            { pathname:'validation-form', text:'ValidationForm'},
             { pathname:'text-input', text:"TextInput"},
             { pathname:'text-input-group', text:"TextInputGroup"},
             { pathname:'radio-group', text:"RadioGroup"},
@@ -25,4 +26,4 @@ export default [
             { pathname:'file-input', text:"FileInput"},
         ]
     }
-]
+}

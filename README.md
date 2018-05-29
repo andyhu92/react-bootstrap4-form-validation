@@ -4,7 +4,8 @@ React components for [HTML5 Constraint validation API](https://developer.mozilla
 
 ## Install
 
-`npm install react-bootstrap4-form-validation --save`
+Release soon
+~~`npm install react-bootstrap4-form-validation --save`~~
 
 ## Develop
 

@@ -75,24 +75,23 @@ export class BaseFormControl extends React.Component {
             let newErrorMessage = "";
             for (let prop in validityState) {
                 if (validityState[prop]) {
-                    if ((prop === "rangeUnderflow" || prop === "rangeOverflow") && errorMessage["range"]) {
-                        newErrorMessage = errorMessage["range"];
-                    } else {
-                        if (prop === "customError") newErrorMessage = input.validationMessage;
-                        else newErrorMessage = errorMessage[map[prop]];
-                    }
+                    if (prop === "customError") newErrorMessage = input.validationMessage;
+                    else newErrorMessage = errorMessage[map[prop]];
                     break;
                 }
             }
 
+            //Add support for minLength attribute
             if (this.props.minLength) {
                 if (input.value.length < +this.props.minLength) {
                     input.setCustomValidity(errorMessage["minLength"]);
                     newErrorMessage = errorMessage["minLength"].replace("{minLength}", this.props.minLength);
                 } else {
-                    input.setCustomValidity("");
-                    newErrorMessage = "";
-                }
+                    if(newErrorMessage === errorMessage["minLength"]){
+                        input.setCustomValidity("");
+                        newErrorMessage = "";
+                    }
+                 }
             }
 
             if (typeof this.props.validator === "function") {
@@ -182,14 +181,14 @@ export class TextInput extends BaseFormControl {
         let props = this.filterProps();
         let { multiline, successMessage, ...domProps } = props;
         return (
-            <React.Fragment>
+            <div>
                 {multiline ?
                     <textarea className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}></textarea> :
                     <input className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
                 }
                 {this.displayErrorMessage()}
                 {this.displaySuccessMessage()}
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -203,7 +202,7 @@ export class TextInputGroup extends BaseFormControl {
         let props = this.filterProps();
         let { prepend, append, ...domProps } = props;
         return (
-            <React.Fragment>
+            <div>
                 <div className="input-group">
                     {prepend && <div className="input-group-prepend">{prepend}</div>}
                     <input {...domProps} className={this.props.className} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
@@ -211,7 +210,7 @@ export class TextInputGroup extends BaseFormControl {
                 </div>
                 {this.state.errorMessage && <div className="invalid-feedback d-block">{this.state.errorMessage}</div>}
                 {this.displaySuccessMessage()}
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -230,7 +229,7 @@ export class RadioGroup extends BaseFormControl {
     render() {
         const { name, inline, required, defaultValue } = this.props;
         return (
-            <React.Fragment>
+            <div>
                 {labels.map((label, i) => (
                     <div className={'form-check ' + (inline ? "form-check-inline" : "")} key={i}>
                         <input className="form-check-input" type="radio"
@@ -244,7 +243,7 @@ export class RadioGroup extends BaseFormControl {
                     </div>
                 ))}
                 {this.state.errorMessage && <div className="invalid-feedback">{this.state.errorMessage}</div>}
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -252,7 +251,7 @@ export class RadioGroup extends BaseFormControl {
 export class RadioItem extends BaseFormControl{
     render () {
         return (
-            <React.Fragment>
+            <div>
                 <input className="form-check-input" type="radio"
                             onChange={this.handleChange}
                             defaultChecked={values[i] === defaultValue}
@@ -260,7 +259,7 @@ export class RadioItem extends BaseFormControl{
                 <label className="form-check-label" htmlFor={ids[i]}>
                     {label}
                 </label>
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -303,24 +302,29 @@ export class FileInput extends BaseFormControl {
     render() {
         let domProps = this.customfilterProps();
         return (
-            <React.Fragment>
+            <div>
                 <input {...domProps} ref={this.inputRef} type="file" onChange={this.handleChange} />
                 {this.displayErrorMessage()}
-            </React.Fragment>
+            </div>
         )
     }
 }
 
 export class SelectGroup extends BaseFormControl {
+    static defaultProps = {
+        ...BaseFormControl.defaultProps,
+        className: "form-control",
+    }
+
     render() {
         let domProps = this.filterProps();
         return (
-            <React.Fragment>
-                <select {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}>
+            <div>
+                <select className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}>
                     {this.props.children}
                 </select>
                 {this.displayErrorMessage()}
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -328,6 +332,9 @@ export class SelectGroup extends BaseFormControl {
 export class Checkbox extends BaseFormControl {
     static defaultProps = {
         ...BaseFormControl.defaultProps,
+        containerClassName:"form-check",
+        className:"form-check-input",
+        containerStyle:{},
         label: ""
     }
 
@@ -335,18 +342,18 @@ export class Checkbox extends BaseFormControl {
         label: PropTypes.string.isRequired
     }
     render() {
-        let domProps = this.filterProps();
-        let { label } = this.props;
+        let props = this.filterProps();
+        let { label, containerClassName, containerStyle, className, ...domProps } = props;
         return (
-            <React.Fragment>
-                <input type="checkbox" {...domProps} ref={this.inputRef} onChange={this.handleChange} />
+            <div className={containerClassName} style={containerStyle}>
+                <input type="checkbox" className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} />
 
                 <label className="form-check-label" htmlFor={domProps.id}>
                     {this.props.label}
                 </label>
 
                 {this.displayErrorMessage()}
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -442,9 +449,6 @@ export class ValidationForm extends React.Component {
                 case "checkbox":
                     value = inputRef.checked;
                     break;
-                case "text": case "email": case "select-one": case "password": case "textarea":
-                    value = inputRef.value;
-                    break;
                 case "radio":
                     let radios = document.getElementsByName(name);
                     for (let i = 0; i < radios.length; i++) {
@@ -458,7 +462,7 @@ export class ValidationForm extends React.Component {
                     value = inputRef.files[0];
                     break;
                 default:
-                    value = null;
+                    value = inputRef.value;
             }
             model[name] = value;
         };

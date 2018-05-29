@@ -24,14 +24,13 @@ class Demo extends React.Component {
             <section className="container-fluid" >
               <Switch>
                 <Route path="/" exact component={BasicUsage}/>
-                
                 {
-                  Routes.map(route => (
-                    <React.Fragment>
+                  Routes.map((route,i) => (
+                    <div key={i}>
                       {route.routes.map(r => (
-                        <Route path={`/${route.path}/${r.pathname}`} component={r.component} />
+                        <Route path={`/${route.path}/${r.pathname}`} key={r.pathname} component={r.component} />
                       ))}
-                    </React.Fragment>
+                    </div>
                   ))
                 }
                 
@@ -50,4 +49,8 @@ export function initCodeSyntaxHighlight() {
   for (let i = 0; i < codes.length; i++) {
     hljs.highlightBlock(codes[i]);
   }
+}
+
+export function InfoBox({children}){
+  return <div className="alert alert-info mt-2">{ children }</div>
 }

@@ -15,6 +15,7 @@ export default [
         group:"API",
         path:"api",
         routes:[
+            { pathname:'base-form-control', text:"Shared API"},
             { pathname:'validation-form', text:'ValidationForm'},
             { pathname:'text-input', text:"TextInput"},
             { pathname:'text-input-group', text:"TextInputGroup"},
@@ -22,7 +23,6 @@ export default [
             { pathname:'check-box', text:"Checkbox"},
             { pathname:'select-group', text:"SelectGroup"},
             { pathname:'file-input', text:"FileInput"},
-            { pathname:'base-form-control', text:"BaseFormControl"},
         ]
     }
 ]

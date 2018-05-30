@@ -6,6 +6,18 @@ import Sidebar from './sideBar';
 import BasicUsage from './examples/basicUsage';
 import Routes from './routes';
 
+function Home () {
+  return (
+    <div className="my-5">
+      <h1>React Bootstrap4 Form Validation</h1>
+      <p>Simple React Components for form validation. Based on 
+        <a href='https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation' target="_blank"> HTML5 Constraint validation API</a> and 
+        <a href='https://getbootstrap.com/docs/4.0/components/forms/#validation' target="_blank"> Bootstrap4 style.</a></p>
+      <code></code>
+    </div>
+  )
+}
+
 class Demo extends React.Component {
   state = {
     isShow: true
@@ -22,7 +34,7 @@ class Demo extends React.Component {
           <Sidebar />
             <section className="container-fluid" >
               <Switch>
-                <Route path="/" exact component={BasicUsage}/>
+                <Route path="/" exact component={Home}/>
                 {
                       Routes.example.routes.map(r => (
                         <Route path={`/${Routes.example.path}/${r.pathname}`} key={r.pathname} component={r.component} />

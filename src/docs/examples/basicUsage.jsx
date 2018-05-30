@@ -1,5 +1,5 @@
 import React from 'react';
-import { ValidationForm, TextInput, SelectGroup, Checkbox, RadioGroup } from "../../../lib";
+import { ValidationForm, TextInput, SelectGroup, Checkbox, Radio } from "../../../lib";
 import { initCodeSyntaxHighlight, InfoBox } from '../index'
 import { Link } from 'react-router-dom';
 
@@ -7,12 +7,13 @@ export default class BasicUsage extends React.Component {
     componentDidMount() {
         initCodeSyntaxHighlight();
     }
-    
+
     render() {
         return (
             <div className="row">
                 <div className="col-md-5">
-                    <ValidationForm onSubmit={(e, formData, inputs) => { e.preventDefault(); console.log(e, formData, inputs) }}>
+                    <ValidationForm onSubmit={(e, formData, inputs) => { e.preventDefault(); console.log(e, formData, inputs) }}
+                    onErrorSubmit={(e, formData, inputs) => { e.preventDefault(); console.log(e, formData, inputs) }}>
                         <h4>Basic Usage 
                             <small className="ml-2">(<b>name</b> attribute is required for all form controls)</small>
                         </h4>
@@ -61,7 +62,7 @@ export default class BasicUsage extends React.Component {
 
                         <div className="form-group mt-5">
                             <label htmlFor="color">Favoriate Color</label>
-                            <SelectGroup name="color" id="color"
+                            <SelectGroup name="color" id="color" 
                                 required>
                                 <option value="">-- Select Color --</option>
                                 <option value="red">Red</option>
@@ -72,12 +73,19 @@ export default class BasicUsage extends React.Component {
                                 Just replace <b>select</b> with <b>SelectGroup</b> and pass <b>option</b> as children. 
                             </InfoBox>
                         </div>
+
+                        <div className="form-group mt-5">
+                            <label>Gender</label>
+                            <Radio.RadioGroup name="gender" required>
+                                <Radio.RadioItem id="male" label="Male" value="male" checked/>
+                                <Radio.RadioItem id="female" label="Female" value="female"/>
+                            </Radio.RadioGroup>
+                        </div>
                         
                         <Checkbox name="ackowledge"
                             id="ackowledge"
                             label="I acknowledge that the above information is correct" 
                             errorMessage="Please check to proceed"
-                            containerClassName="form-check mt-5"
                             required/>
                             
                       
@@ -89,7 +97,7 @@ export default class BasicUsage extends React.Component {
                 <div className="col-md-7">
                     <pre>
                         <code className="lang-javascript">
-                            {`import { ValidationForm, TextInput } from "react-bootstrap4-form-validation"
+                            {`import { ValidationForm, TextInput, SelectGroup, Checkbox, Radio } from "react-bootstrap4-form-validation"
 ...
 <ValidationForm onSubmit={(e, formData, inputs) => { e.preventDefault(); console.log(e, formData, inputs) }}>
   <h4>Basic Usage</h4>
@@ -132,8 +140,16 @@ export default class BasicUsage extends React.Component {
             <option value="blue">Blue</option>
         </SelectGroup>
   </div>
-                        
 
+  
+  <div className="form-group">
+        <label>Gender</label>
+        <Radio.RadioGroup name="gender" required>
+            <Radio.RadioItem id="male" label="Male" value="male" checked/>
+            <Radio.RadioItem id="female" label="Female" value="female"/>
+        </Radio.RadioGroup>
+  </div>
+                        
   <Checkbox name="ackowledge"
     id="ackowledge"
     label="I acknowledge that the above information is correct" 

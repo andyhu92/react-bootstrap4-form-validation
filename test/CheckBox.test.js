@@ -16,7 +16,7 @@ describe("<CheckBox />", () => {
     }
 
     it('should match snapshot', () => {
-        const wrapper = render(<Checkbox {...domProps} containerClassName="test" containerStyle={{width:100}}/>)
+        const wrapper = render(<Checkbox {...domProps} containerStyle={{width:100}}/>)
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 

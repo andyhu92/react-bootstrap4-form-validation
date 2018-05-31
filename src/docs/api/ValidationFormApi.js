@@ -4,11 +4,18 @@ import { initCodeSyntaxHighlight, InfoBox, PropertiesTable } from '../index'
 import { Link } from 'react-router-dom';
 
 export default class ValidationFormApi extends Component{
-    state = {
-        immediate:true,
-        setFocusOnError:true
+    constructor(props){
+        super(props);
+        // If you want to use the reset state function, you need to have a reference to the ValidationForm component
+        //If your React < 16.3, check https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
+        this.formRef = React.createRef();
+        this.state = {
+            immediate:true,
+            setFocusOnError:true,
+            clearInputOnReset:false
+        }
     }
-
+   
     properties = [
         {
             name:"onSubmit",
@@ -69,20 +76,24 @@ export default class ValidationFormApi extends Component{
 
     componentDidMount() {
         initCodeSyntaxHighlight();
-        ValidationForm.defaultErrorMessage.required = "Bla";
     }
 
     handleSubmit = (e, formData, inputs) => {
-
+        console.log(e,formData, inputs)
     }
 
     handleErrorSubmit = (e,formData, errorInputs) => {
-        console.log(errorInputs);
+        console.log(e,formData, inputs)
     }
 
     handleCheck = (e) => {
         let name = e.target.name;
         this.setState({ [name]: e.target.checked })
+    }
+
+    resetForm = () => {
+        let formRef = this.formRef.current;
+        formRef.resetValidationState(this.state.clearInputOnReset);
     }
 
     render () {
@@ -91,6 +102,7 @@ export default class ValidationFormApi extends Component{
                 <div className="col-md-5">
                     <h4>ValidationForm</h4>
                     <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit} 
+                        ref={this.formRef}
                         immediate={this.state.immediate} 
                         setFocusOnError={this.state.setFocusOnError}
                         defaultErrorMessage={{ required: "Please enter something."}}
@@ -108,15 +120,17 @@ export default class ValidationFormApi extends Component{
                         <div className="form-group">
                             <label htmlFor="attachment">Attachment</label>
                             <FileInput name="attachment" id="attachment" required
+                                errorMessage="Please upload a file"
                                 fileType={["pdf"]} maxFileSize="120 kb"/>
                         </div>
 
-                        <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" />
-                        
+                        <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" 
+                            required errorMessage="Please check this..." />
 
                         <div className="form-group mt-3">
                             <button className="btn btn-primary">Submit</button>
-                            <button className="btn btn-default ml-2" type="button">Reset</button>
+                            <button className="btn btn-default ml-2" type="button"
+                                onClick={this.resetForm}>Reset</button>
                         </div>
                     </ValidationForm>
 
@@ -131,45 +145,88 @@ export default class ValidationFormApi extends Component{
                                 onChange={this.handleCheck} checked={this.state.setFocusOnError}/>
                             <label className="form-check-label" htmlFor="setFocusOnError">Toggle <b>setFocusOnError</b></label>
                         </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" id="clearInputOnReset" name="clearInputOnReset"
+                                onChange={this.handleCheck} checked={this.state.clearInputOnReset}/>
+                            <label className="form-check-label" htmlFor="clearInputOnReset">Toggle <b>clearInputOnReset</b></label>
+                        </div>
                     </div>
 
                     <InfoBox>
                             To make <code>ValidationForm</code> to work, the <code>name</code> attribute is required for all form controls for internal mapping.
                     </InfoBox>
 
+                    <h5>Reset form</h5>
+                    <p>There is a method <code>resetValidationState</code> on <code>ValidationForm</code> Check the code at right to see how to reset the form validation state</p>
                   
                 </div>
                 <div className="col-md-7">
                     <pre>
-                        <code className="lang-javascript">
+                        <code className="lang-javascript" style={{height:800}}>
 {`
-<ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit} 
+import React, { Component } from 'react'
+import { ValidationForm, TextInput, FileInput, SelectGroup, Checkbox } from "react-bootstrap4-form-validation";
+
+class ValidationFormDemo extends Component {
+    constructor(props){
+        super(props);
+        // If you want to use the reset state function, you need to have a reference to the ValidationForm component
+        //If your React < 16.3, check https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
+        this.formRef = React.createRef();
+        this.state = {
+            immediate:true,
+            setFocusOnError:true,
+            clearInputOnReset:false
+        }
+    }
+
+    handleSubmit = (e, formData, inputs) => {
+        console.log(e,formData, inputs)
+    }
+
+    handleErrorSubmit = (e,formData, errorInputs) => {
+        console.log(e,formData, inputs)
+    }
+
+    resetForm = () => {
+        let formRef = this.formRef.current;
+        formRef.resetValidationState(this.state.clearInputOnReset);
+    }
+
+    render () {
+        return (
+            <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit} 
+                        ref={this.formRef}
                         immediate={this.state.immediate} 
                         setFocusOnError={this.state.setFocusOnError}
                         defaultErrorMessage={{ required: "Please enter something."}} >
-    <div className="form-group">
-        <label htmlFor="fullName">Full name</label>
-        <TextInput name="fullName" id="fullName" required/>
-    </div>
+                <div className="form-group">
+                    <label htmlFor="fullName">Full name</label>
+                    <TextInput name="fullName" id="fullName" required/>
+                </div>
 
-    <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <TextInput name="email" id="email" type="email" required/>
-    </div>
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <TextInput name="email" id="email" type="email" required/>
+                </div>
 
-    <div className="form-group">
-        <label htmlFor="attachment">Attachment</label>
-        <FileInput name="attachment" id="attachment" required
-                fileType={["pdf"]} maxFileSize="120 kb"/>
-    </div>
+                <div className="form-group">
+                    <label htmlFor="attachment">Attachment</label>
+                    <FileInput name="attachment" id="attachment" required
+                            errorMessage="Please upload a file"
+                            fileType={["pdf"]} maxFileSize="120 kb"/>
+                </div>
 
-    <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" />
+                <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" 
+                    required errorMessage="Please check this..." />
 
-    <div className="form-group mt-3">
-        <button className="btn btn-primary">Submit</button>
-        <button className="btn btn-default ml-2" type="button">Reset</button>
-    </div>
-</ValidationForm>
+                <div className="form-group mt-3">
+                    <button className="btn btn-primary">Submit</button>
+                    <button className="btn btn-default ml-2" type="button" onClick={this.resetForm}>Reset</button>
+                </div>
+            </ValidationForm>
+        )
+    }
 `}
                         </code>
                     </pre>

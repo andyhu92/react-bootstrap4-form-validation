@@ -2,7 +2,7 @@
 
 exports[`<CheckBox /> should match snapshot 1`] = `
 <div
-  class="test"
+  class="form-check "
   style="width:100px"
 >
   <input

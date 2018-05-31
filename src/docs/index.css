@@ -1,3 +1,7 @@
+header, section, footer, aside, nav, main, article, figure {
+    display: block; 
+}
+
 code{
     border-radius: 5px;
     margin-top:120px;

@@ -30,7 +30,7 @@ class Demo extends React.Component {
   render() {
     return (
       <Router>
-        <main>
+        <div>
           <Sidebar />
             <section className="container-fluid" >
               <Switch>
@@ -47,7 +47,7 @@ class Demo extends React.Component {
                 }
               </Switch>
             </section>
-        </main>
+        </div>
       </Router>
     );
   }

@@ -1,4 +1,6 @@
 docs
+coverage
 src
+test
 .babelrc
 webpack.config.js

@@ -2,6 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './index.css';
+import './highlight/prism.css';
+import './highlight/prism';
 import Sidebar from './sideBar';
 import BasicUsage from './examples/basicUsage';
 import Routes from './routes';
@@ -56,10 +58,11 @@ class Demo extends React.Component {
 render(<Demo />, document.getElementById("app"));
 
 export function initCodeSyntaxHighlight() {
-  let codes = document.getElementsByTagName("code");
-  for (let i = 0; i < codes.length; i++) {
-    if(codes[i].classList.contains("lang-javascript")) hljs.highlightBlock(codes[i]);
-  }
+  // let codes = document.getElementsByTagName("code");
+  // for (let i = 0; i < codes.length; i++) {
+  //   if(codes[i].classList.contains("lang-javascript")) hljs.highlightBlock(codes[i]);
+  // }
+  Prism.highlightAll();
 }
 
 export function InfoBox({children}){

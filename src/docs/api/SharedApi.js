@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { ValidationForm, Radio } from '../../lib';
 import { initCodeSyntaxHighlight, InfoBox, PropertiesTable } from '../index'
 
-export default class RadioGroupApi extends Component {
+export default class SharedApi extends Component {
     state = {
         pet: "",
         transport:""
@@ -31,12 +31,6 @@ export default class RadioGroupApi extends Component {
             type:"object",
             default:<code>{`{}`}</code>,
             description:<p>Style object for the wrapper <code>div</code>.</p>
-        },
-        {
-            name:"containerClassName",
-            type:"string",
-            default:"",
-            description:<p>Class name for the wrapper <code>div</code>.</p>
         },
         {
             name:"valueSelected",
@@ -92,12 +86,6 @@ export default class RadioGroupApi extends Component {
             type:"object",
             default:<code>{`{}`}</code>,
             description:<p>Style object for the wrapper <code>div</code>.</p>
-        },
-        {
-            name:"containerClassName",
-            type:"string",
-            default:"",
-            description:<p>Class name for the wrapper <code>div</code>. Will be appended to existing Bootstrap4 <code>form-check</code> class.</p>
         },
     ]
     
@@ -175,8 +163,7 @@ import { ValidationForm, Radio } from 'react-bootstrap4-form-validation';
 
 class RadioGroupDemo extends Component {
     state = {
-        pet: "",
-        transport:""
+        pet: ""
     }
 
     handleChange = (e, value) => {

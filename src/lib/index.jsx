@@ -70,7 +70,6 @@ export class BaseFormControl extends React.Component {
         //If string was passed to errorMessage, default to required error Message
         if (typeof (errorMessage) === "string") errorMessage = { required: errorMessage };
         errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, defaultErrorMessage, errorMessage); 
-
         let input = this.getInputRef();
         if (input) {
             let validityState = input.validity;
@@ -166,7 +165,7 @@ export class BaseFormControl extends React.Component {
     filterProps = () => {
         let {
            errorMessage, successMessage, validator, defaultErrorMessage,
-            attachToForm, detachFromForm, setFormDirty, label, immediate, inline, buttonBody, onButtonClick,
+            attachToForm, detachFromForm, setFormDirty, label, immediate,
             ...rest
        } = this.props;
         return rest;
@@ -227,6 +226,7 @@ class RadioGroup extends BaseFormControl {
         inline: PropTypes.bool,
         name: PropTypes.string.isRequired,
         containerStyle:PropTypes.object,
+        containerClassName:PropTypes.string,
         defaultValue: PropTypes.string,
         valueSelected: PropTypes.string,
         onChange: PropTypes.func
@@ -255,9 +255,9 @@ class RadioGroup extends BaseFormControl {
 
     render() {
         let props = this.filterProps();
-        const { containerStyle } = props;
+        const { containerStyle, containerClassName } = props;
         return (
-            <div style={containerStyle}>
+            <div style={containerStyle} className={containerClassName}>
                 { this.mapRadioItems() }
                 {this.state.errorMessage && <div className="invalid-feedback d-block">{this.state.errorMessage}</div>}
                 {this.displaySuccessMessage()}
@@ -268,14 +268,16 @@ class RadioGroup extends BaseFormControl {
 
 class RadioItem extends Component{
     static defaultProps = {
-        containerStyle:{}
+        containerStyle:{},
+        containerClassName:""
     }
 
     static propTypes = {
         value: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
-        containerStyle:PropTypes.object
+        containerStyle:PropTypes.object,
+        containerClassName:PropTypes.string
     }
 
     onChange = (e) => {
@@ -284,11 +286,11 @@ class RadioItem extends Component{
     }
 
     render () {
-        let { checkError, containerStyle, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
+        let { checkError, containerStyle, containerClassName, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
         let checkProps = defaultValue ?  { defaultChecked: this.props.value === defaultValue } 
         :  { checked : this.props.value === valueSelected, onChange : this.onChange };
         return (
-            <div className={"form-check " + (inline ? "form-check-inline":"")} style={containerStyle}>
+            <div className={containerClassName + " form-check " + (inline ? "form-check-inline":"")} style={containerStyle}>
                 <input className="form-check-input" type="radio"
                 {...checkProps }
                 {...domProps} />
@@ -387,6 +389,13 @@ export class Checkbox extends BaseFormControl {
         inline: PropTypes.bool,
         id: PropTypes.string.isRequired
     }
+
+    handleChange = (e) => {
+        let checked = e.target.checked;
+        if(this.props.onChange) this.props.onChange(e, checked);
+        this.checkError();
+    }
+
     render() {
         let props = this.filterProps();
         let { label, inline, containerStyle, className, ...domProps } = props;

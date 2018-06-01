@@ -76,7 +76,7 @@ export default class BasicUsage extends React.Component {
 
                         <div className="form-group mt-5">
                             <label>Gender</label>
-                            <Radio.RadioGroup name="gender" required value="male">
+                            <Radio.RadioGroup name="gender" required defaultValue="male">
                                 <Radio.RadioItem id="male" label="Male" value="male"/>
                                 <Radio.RadioItem id="female" label="Female" value="female"/>
                             </Radio.RadioGroup>
@@ -144,8 +144,8 @@ export default class BasicUsage extends React.Component {
   
   <div className="form-group">
         <label>Gender</label>
-        <Radio.RadioGroup name="gender" required>
-            <Radio.RadioItem id="male" label="Male" value="male" checked/>
+        <Radio.RadioGroup name="gender" required defaultValue="male">
+            <Radio.RadioItem id="male" label="Male" value="male"/>
             <Radio.RadioItem id="female" label="Female" value="female"/>
         </Radio.RadioGroup>
   </div>

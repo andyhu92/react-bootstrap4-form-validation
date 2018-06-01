@@ -3,6 +3,7 @@ import ErrorMessage from './examples/errorMessage';
 import FullExample from './examples/fullExample';
 import ValidationFormApi from './api/ValidationFormApi';
 import RadioGroupApi from './api/RadioGroupApi';
+import CheckBoxApi from './api/CheckBoxApi';
 
 export default {
     example: {
@@ -23,7 +24,7 @@ export default {
             { pathname:'text-input', text:"TextInput"},
             { pathname:'text-input-group', text:"TextInputGroup"},
             { pathname:'radio-group', text:"RadioGroup", component: RadioGroupApi},
-            { pathname:'check-box', text:"Checkbox"},
+            { pathname:'check-box', text:"Checkbox", component: CheckBoxApi},
             { pathname:'select-group', text:"SelectGroup"},
             { pathname:'file-input', text:"FileInput"},
         ]

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { ValidationForm, Radio } from '../../lib';
+import { ValidationForm, Checkbox } from '../../lib';
 import { initCodeSyntaxHighlight, InfoBox, PropertiesTable } from '../index'
 
-export default class RadioGroupApi extends Component {
+export default class CheckBoxApi extends Component {
     state = {
         pet: "",
         transport:""
@@ -12,7 +12,7 @@ export default class RadioGroupApi extends Component {
         initCodeSyntaxHighlight();
     }
 
-    radioGroupProperties = [
+    checkBoxProperties = [
         {
             name:"name",
             type:"string",
@@ -31,12 +31,6 @@ export default class RadioGroupApi extends Component {
             type:"object",
             default:<code>{`{}`}</code>,
             description:<p>Style object for the wrapper <code>div</code>.</p>
-        },
-        {
-            name:"containerClassName",
-            type:"string",
-            default:"",
-            description:<p>Class name for the wrapper <code>div</code>.</p>
         },
         {
             name:"valueSelected",
@@ -65,41 +59,6 @@ export default class RadioGroupApi extends Component {
         },
     ]
 
-    radioItemProperties = [
-        {
-            name:"value",
-            type:"string",
-            default:"",
-            description:<p>The <code>value</code> attribute for the radio button.</p>,
-            required:true
-        },
-        {
-            name:"id",
-            type:"string",
-            default:"",
-            description:<p>The <code>id</code> attribute for the radio button. It is required to link your radio with the label.</p>,
-            required:true
-        },
-        {
-            name:"label",
-            type:"string",
-            default:"",
-            description:<p>The label text for the radio button. And the <code>for</code> property will have the same value as <code>id</code>.</p>,
-            required:true
-        },
-        {
-            name:"containerStyle",
-            type:"object",
-            default:<code>{`{}`}</code>,
-            description:<p>Style object for the wrapper <code>div</code>.</p>
-        },
-        {
-            name:"containerClassName",
-            type:"string",
-            default:"",
-            description:<p>Class name for the wrapper <code>div</code>. Will be appended to existing Bootstrap4 <code>form-check</code> class.</p>
-        },
-    ]
     
     handleSubmit = (e, formData, inputs) => {
         e.preventDefault();
@@ -120,46 +79,21 @@ export default class RadioGroupApi extends Component {
         return (
             <div className="row">
                 <div className="col-md-5">
-                    <h4>Radio Group</h4>
+                    <h4>Checkbox</h4>
                     <hr/>
                     <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
                         <h5>Controlled Components with one disabled option</h5>
-                        <div className="form-group">
-                            <label>Select your pet</label>
-                            <Radio.RadioGroup name="pet" required errorMessage="Please select your pet" valueSelected={this.state.pet}
-                                onChange={this.handleChange}>
-                                <Radio.RadioItem id="dog" label="Dog" value="dog" />
-                                <Radio.RadioItem id="cat" label="Cat" value="cat" />
-                                <Radio.RadioItem id="fish" label="Fish" value="fish" />
-                                <Radio.RadioItem id="tyrannosaurus" label="Tyrannosaurus" value="tyrannosaurus" disabled/>
-                            </Radio.RadioGroup>
-                        </div>
                         <h5 className="mt-5">Stacked layout</h5>
                         <div className="form-group">
-                            <label>Choose your mode of transport</label>
-                            <Radio.RadioGroup name="transport" required valueSelected={this.state.transport}
-                                inline={false}
-                                onChange={this.handleChange}>
-                                <Radio.RadioItem id="air" label="Air" value="air" />
-                                <Radio.RadioItem id="water" label="Water" value="water" />
-                                <Radio.RadioItem id="land" label="Land" value="land" />
-                            </Radio.RadioGroup>
+                            <Checkbox name="check1" label="Check #1" id="check1" required />
+                            <Checkbox name="check2" label="Check #2" id="check2" required />
+                            <Checkbox name="check3" label="Check #3" id="check3" required />
                         </div>
+                        <h5 className="mt-5">Inline layout</h5>
                         <div className="form-group">
-                            <button className="btn btn-primary">Submit</button>
-                        </div>
-                    </ValidationForm>
-
-                    <h5 className="mt-5">Uncontrolled Components with default value</h5>
-                    <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
-                        <div className="form-group">
-                            <label>Select your food</label>
-                            <Radio.RadioGroup name="food" required errorMessage="Please select your food" 
-                                defaultValue="pizza">
-                                <Radio.RadioItem id="pizza" label="Pizza" value="pizza" />
-                                <Radio.RadioItem id="hotdog" label="Hotdog" value="hotdog" />
-                                <Radio.RadioItem id="rice" label="Rice" value="rice" />
-                            </Radio.RadioGroup>
+                            <Checkbox name="check4" label="Check #4" required inline />
+                            <Checkbox name="check5" label="Check #5" required inline/>
+                            <Checkbox name="check6" label="Check #6" required inline/>
                         </div>
                         <div className="form-group">
                             <button className="btn btn-primary">Submit</button>
@@ -175,8 +109,7 @@ import { ValidationForm, Radio } from 'react-bootstrap4-form-validation';
 
 class RadioGroupDemo extends Component {
     state = {
-        pet: "",
-        transport:""
+        pet: ""
     }
 
     handleChange = (e, value) => {
@@ -248,8 +181,7 @@ class RadioGroupDemo extends Component {
                         </code>
                     </pre>
                 </div>
-                <PropertiesTable title="RadioGroup" properties={this.radioGroupProperties}/>
-                <PropertiesTable title="RadioItem" properties={this.radioItemProperties}/>
+                <PropertiesTable properties={this.checkBoxProperties}/>
             </div>
        )
     }

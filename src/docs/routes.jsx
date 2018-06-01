@@ -2,6 +2,7 @@ import BasicUsage from './examples/basicUsage';
 import ErrorMessage from './examples/errorMessage';
 import FullExample from './examples/fullExample';
 import ValidationFormApi from './api/ValidationFormApi';
+import RadioGroupApi from './api/RadioGroupApi';
 
 export default {
     example: {
@@ -21,7 +22,7 @@ export default {
             { pathname:'base-form-control', text:"Shared API"},
             { pathname:'text-input', text:"TextInput"},
             { pathname:'text-input-group', text:"TextInputGroup"},
-            { pathname:'radio-group', text:"RadioGroup"},
+            { pathname:'radio-group', text:"RadioGroup", component: RadioGroupApi},
             { pathname:'check-box', text:"Checkbox"},
             { pathname:'select-group', text:"SelectGroup"},
             { pathname:'file-input', text:"FileInput"},

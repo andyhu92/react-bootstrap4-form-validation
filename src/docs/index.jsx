@@ -69,10 +69,10 @@ export function InfoBox({children}){
   return <div className="alert alert-info mt-2">{ children }</div>
 }
 
-export function PropertiesTable ( { properties = [] }){
+export function PropertiesTable ( { title, properties = [] }){
   return (
      <div className="col-md-12">
-          <h4>Properties <small>(<span className="text-danger">*</span> indicates required property)</small></h4>
+          <h4>{title} Properties <small>(<span className="text-danger">*</span> indicates required property)</small></h4>
           <table className="table table-bordered table-striped">
               <thead>
                   <tr>

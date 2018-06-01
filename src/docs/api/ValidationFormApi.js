@@ -26,7 +26,7 @@ export default class ValidationFormApi extends Component{
                             Signature: <code>(event, formData, formControls) => void</code>
                             <ul>
                                 <li><i>event:</i> Submit event targeting the form</li>
-                                <li><i>formData:</i> Serialized form data object. Key will be the input name.</li>
+                                <li><i>formData:</i> Serialized form data object. The object key will be the input name.</li>
                                 <li><i>formControls:</i> Form controls reference inside the form.</li>
                             </ul>
                         </div>,
@@ -38,12 +38,13 @@ export default class ValidationFormApi extends Component{
             default:"",
             description:<div>
                             <p>Callback function evoked when the form is submitted with error.</p>
-                            Signature: <code>(event, formData, errorDetails) => void</code>
+                            Signature: <code>(event, formData, errorInputs) => void</code>
                             <ul>
-                                <li><i>event:</i> Submit event targeting the form</li>
+                                <li><i>event:</i> Submit event targeting the form <b>(preventDefault and stopPropagation has been called)</b></li>
                                 <li><i>formData:</i> Serialized form data object. Key will be the input name.</li>
-                                <li><i>errorDetails:</i> Object contains input error details. Useful when building validation summary.<br/>
-                                    <b>key:</b> input name. <b>value:</b> Reference to form control.You can get message from <code></code>
+                                <li><i>errorInputs:</i> Object contains input with error. Useful when building validation summary.<br/>
+                                    <b>key:</b> input name. <b>value:</b> Reference to the wrapper form control component. 
+                                        You can get error message from <code>(control).state.errorMessage</code>
                                 </li>
                             </ul>
                         </div>
@@ -79,11 +80,13 @@ export default class ValidationFormApi extends Component{
     }
 
     handleSubmit = (e, formData, inputs) => {
-        console.log(e,formData, inputs)
+        e.preventDefault();
+        console.log(formData);
+        alert(JSON.stringify(formData, null, 2));
     }
 
     handleErrorSubmit = (e,formData, errorInputs) => {
-        console.log(e,formData, inputs)
+        console.log(e,formData, errorInputs)
     }
 
     handleCheck = (e) => {
@@ -157,7 +160,12 @@ export default class ValidationFormApi extends Component{
                     </InfoBox>
 
                     <h5>Reset form</h5>
-                    <p>There is a method <code>resetValidationState</code> on <code>ValidationForm</code> Check the code at right to see how to reset the form validation state</p>
+                    <p>There is a method <code>resetValidationState</code> in the instance of <code>ValidationForm</code>.
+                    By default this function only reset the <b>validation state</b> (error message, classes...), since most of the time
+                    you have controlled form components and you can reset the state to reset the values.</p>
+
+                    <p className="mt-2">However, you can pass a boolean flag to <code>resetValidationState</code> to also reset the <b>DOM node</b> value for uncontrolled components</p>
+                    <p>Check the code at right to see how to reset the form validation state</p>
                   
                 </div>
                 <div className="col-md-7">
@@ -181,7 +189,9 @@ class ValidationFormDemo extends Component {
     }
 
     handleSubmit = (e, formData, inputs) => {
-        console.log(e,formData, inputs)
+        e.preventDefault();
+        console.log(formData);
+        alert(JSON.stringify(formData, null, 2));
     }
 
     handleErrorSubmit = (e,formData, errorInputs) => {

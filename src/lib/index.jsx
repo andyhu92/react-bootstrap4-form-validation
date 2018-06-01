@@ -226,7 +226,10 @@ class RadioGroup extends BaseFormControl {
     static propTypes = {
         inline: PropTypes.bool,
         name: PropTypes.string.isRequired,
-        containerStyle:PropTypes.object
+        containerStyle:PropTypes.object,
+        defaultValue: PropTypes.string,
+        valueSelected: PropTypes.string,
+        onChange: PropTypes.func
     }
 
     getInputRef(){
@@ -241,7 +244,11 @@ class RadioGroup extends BaseFormControl {
                 ...child.props,
                 inline: this.props.inline,
                 name: this.props.name,
-                required: this.props.required
+                required: this.props.required,
+                defaultValue: this.props.defaultValue,
+                onChange: this.props.onChange,
+                valueSelected: this.props.valueSelected,
+                checkError: this.checkError
             });
         });
     }
@@ -253,6 +260,7 @@ class RadioGroup extends BaseFormControl {
             <div style={containerStyle}>
                 { this.mapRadioItems() }
                 {this.state.errorMessage && <div className="invalid-feedback d-block">{this.state.errorMessage}</div>}
+                {this.displaySuccessMessage()}
             </div>
         )
     }
@@ -270,13 +278,21 @@ class RadioItem extends Component{
         containerStyle:PropTypes.object
     }
 
+    onChange = (e) => {
+        this.props.onChange(e, e.target.value);
+        this.props.checkError();
+    }
+
     render () {
-        let { containerStyle, label, inline, ...domProps } = this.props;
+        let { checkError, containerStyle, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
+        let checkProps = defaultValue ?  { defaultChecked: this.props.value === defaultValue } 
+        :  { checked : this.props.value === valueSelected, onChange : this.onChange };
         return (
             <div className={"form-check " + (inline ? "form-check-inline":"")} style={containerStyle}>
-                <input className="form-check-input" type="radio" 
+                <input className="form-check-input" type="radio"
+                {...checkProps }
                 {...domProps} />
-                <label className="form-check-label" htmlFor="test">
+                <label className="form-check-label" htmlFor={this.props.id}>
                     { label }
                 </label>
             </div>
@@ -331,6 +347,7 @@ export class FileInput extends BaseFormControl {
             <div>
                 <input {...domProps} ref={this.inputRef} type="file" onChange={this.handleChange} />
                 {this.displayErrorMessage()}
+                {this.displaySuccessMessage()}
             </div>
         )
     }
@@ -349,6 +366,7 @@ export class SelectGroup extends BaseFormControl {
                     {this.props.children}
                 </select>
                 {this.displayErrorMessage()}
+                {this.displaySuccessMessage()}
             </div>
         )
     }
@@ -524,7 +542,6 @@ export class ValidationForm extends React.Component {
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-            
             if (this.props.onErrorSubmit) this.props.onErrorSubmit(event, formData, this.getErrorInputs(inputArr));
             if (this.props.setFocusOnError) {
                 let firstErrorInput = this.findFirstErrorInput(inputArr);

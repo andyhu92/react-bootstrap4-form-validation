@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, render, mount } from 'enzyme';
-import { ValidationForm, TextInput } from '../lib'
+import { ValidationForm, TextInput, Checkbox, SelectGroup, Radio } from '../lib'
 import toJson from "enzyme-to-json";
 
 
@@ -26,7 +26,7 @@ describe('<ValidationForm />', () => {
 
     it('should focus on first error input when submit', () => {
         const wrapper = mount(
-            <ValidationForm className="container" onSubmit={doNothing} >
+            <ValidationForm onSubmit={doNothing} >
                 <TextInput name="age"/>
                 <TextInput name="firstName" required id="firstName"/>
             </ValidationForm>)
@@ -40,7 +40,7 @@ describe('<ValidationForm />', () => {
 
     it('should not focus on first error input when submit if disable this feature', () => {
         const wrapper = mount(
-            <ValidationForm className="container" onSubmit={doNothing} setFocusOnError={false}>
+            <ValidationForm onSubmit={doNothing} setFocusOnError={false}>
                 <TextInput name="age"/>
                 <TextInput name="firstName" required id="firstName"/>
             </ValidationForm>)
@@ -50,4 +50,24 @@ describe('<ValidationForm />', () => {
         wrapper.find("form").simulate("submit");
         expect(fakeFocus).not.toHaveBeenCalled();
     })
+
+    // it('should serialize form data correctly', () => {
+    //     const mockCallback = jest.fn();
+    //     const wrapper = mount(
+    //         <ValidationForm onSubmit={mockCallback}>
+    //             <TextInput name="age" value="16" type="number"/>
+    //             <TextInput name="firstName" value="john" id="firstName"/>
+    //             <Checkbox name="isSubscribe" label="isSubscribe" id="isSubscribe"/>
+    //             <SelectGroup name="color" value="red">
+    //                 <option value="red">Red</option>
+    //             </SelectGroup>
+    //             <Radio.RadioGroup name="gender" value="male">
+    //                 <Radio.RadioItem value="male" label="Male" id="male"/>
+    //                 <Radio.RadioItem value="female" label="Female" id="female"/>
+    //             </Radio.RadioGroup>
+    //         </ValidationForm>)
+
+        
+    //     expect(fakeFocus).not.toHaveBeenCalled();
+    // })
 });

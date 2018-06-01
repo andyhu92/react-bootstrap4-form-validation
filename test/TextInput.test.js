@@ -76,9 +76,9 @@ describe("<TextInput />", () => {
             </ValidationForm>
         )
         let input = wrapper.find("input");
-        input.instance().value="test";
+        input.getDOMNode().value="test";
         input.simulate('change');
-        input.instance().value="";
+        input.getDOMNode().value="";
         input.simulate('change');
         let errorMessage = <div className="invalid-feedback">{defaultErrorMessage.required}</div>
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
@@ -93,9 +93,9 @@ describe("<TextInput />", () => {
         )
         let errorMessage = <div className="invalid-feedback">{defaultErrorMessage.required}</div>
         let input = wrapper.find("input");
-        input.instance().value="test";
+        input.getDOMNode().value="test";
         input.simulate('change');
-        input.instance().value="";
+        input.getDOMNode().value="";
         input.simulate('change');
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
         input.simulate('blur');
@@ -115,12 +115,12 @@ describe("<TextInput />", () => {
         )
         let errorMessage = <div className="invalid-feedback">{defaultErrorMessage.minLength.replace("{minLength}", minLength)}</div>
         let input = wrapper.find("input");
-        input.instance().value="a";
+        input.getDOMNode().value="a";
         input.simulate('change');
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
 
         errorMessage = <div className="invalid-feedback">{defaultErrorMessage.pattern}</div>
-        input.instance().value="abcd";
+        input.getDOMNode().value="abcd";
         input.simulate('change');
         
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);

@@ -361,9 +361,11 @@ export class SelectGroup extends BaseFormControl {
     }
     render() {
         let domProps = this.filterProps();
+        console.log(domProps)
         return (
             <div>
-                <select className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}>
+                <select className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}
+                    value={this.props.value} >
                     {this.props.children}
                 </select>
                 {this.displayErrorMessage()}

@@ -134,6 +134,8 @@ export default class CheckBoxApi extends Component {
                             <button className="btn btn-primary">Submit</button>
                         </div>
                     </ValidationForm>
+                    <InfoBox><strong>All</strong>  the other properties not mentioned at below will also be passed into the underlying <code>input</code> tag.
+                    <br/>For example: <code>{`<Checkbox name="something" label="something" id="something" disabled />`}</code> will render a disabled checkbox.</InfoBox>
                 </div>
                 <div className="col-md-7">
                     <pre>
@@ -142,7 +144,7 @@ export default class CheckBoxApi extends Component {
 import React, { Component } from 'react'
 import { ValidationForm, Checkbox } from 'react-bootstrap4-form-validation';
 
-class CheckBoxApi extends Component {
+class CheckBoxDemo extends Component {
     state = {
         check1:false,
         check2:true,

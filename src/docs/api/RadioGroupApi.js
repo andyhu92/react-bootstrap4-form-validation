@@ -184,6 +184,8 @@ export default class RadioGroupApi extends Component {
                             <button className="btn btn-primary">Submit</button>
                         </div>
                     </ValidationForm>
+                    <InfoBox>For <code>RadioItem</code>, <strong>all</strong> the other properties not mentioned at below will also be passed into the underlying <code>input</code> tag.
+                    <br/>For example: <code>{`<Radio.RadioItem id="something" label="something" value="something" disabled />>`}</code> will render a disabled radio button.</InfoBox>
                 </div>
                 <div className="col-md-7">
                     <pre>

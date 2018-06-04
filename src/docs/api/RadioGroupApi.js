@@ -14,6 +14,24 @@ export default class RadioGroupApi extends Component {
 
     radioGroupProperties = [
         {
+            name:"required",
+            type:"boolean",
+            default:<code>false</code>,
+            description:"Whether this field is required."
+        },
+        {
+            name:"errorMessage",
+            type:"string",
+            default:"",
+            description:<p>The error message for the <code>required</code> validation rule.</p>
+        },
+        {
+            name:"successMessage",
+            type:"string",
+            default:"",
+            description:<p>The success message when the input value passed all validation rules.</p>
+        },
+        {
             name:"name",
             type:"string",
             default:"",
@@ -84,14 +102,14 @@ export default class RadioGroupApi extends Component {
             name:"label",
             type:"string",
             default:"",
-            description:<p>The label text for the radio button. And the <code>for</code> property will have the same value as <code>id</code>.</p>,
+            description:<p>The label text for the radio button.</p>,
             required:true
         },
         {
             name:"containerStyle",
             type:"object",
             default:<code>{`{}`}</code>,
-            description:<p>Style object for the wrapper <code>div</code>.</p>
+            description:<p>Style for the wrapper <code>div</code>.</p>
         },
         {
             name:"containerClassName",
@@ -155,6 +173,7 @@ export default class RadioGroupApi extends Component {
                         <div className="form-group">
                             <label>Select your food</label>
                             <Radio.RadioGroup name="food" required errorMessage="Please select your food" 
+                                successMessage="Your have something to eat now!"
                                 defaultValue="pizza">
                                 <Radio.RadioItem id="pizza" label="Pizza" value="pizza" />
                                 <Radio.RadioItem id="hotdog" label="Hotdog" value="hotdog" />

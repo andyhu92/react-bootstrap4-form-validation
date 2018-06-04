@@ -4,8 +4,11 @@ import { initCodeSyntaxHighlight, InfoBox, PropertiesTable } from '../index'
 
 export default class CheckBoxApi extends Component {
     state = {
-        pet: "",
-        transport:""
+        check1:false,
+        check2:true,
+        check3:false,
+        check4:true,
+        check5:true
     }
 
     componentDidMount (){
@@ -14,17 +17,28 @@ export default class CheckBoxApi extends Component {
 
     checkBoxProperties = [
         {
-            name:"name",
+            name:"required",
+            type:"boolean",
+            default:<code>false</code>,
+            description:"Whether this field is required."
+        },
+        {
+            name:"errorMessage",
             type:"string",
             default:"",
-            description:<p>The <code>name</code> attribute of underlying radio buttons.</p>,
-            required:true
+            description:<p>The error message for the <code>required</code> validation rule.</p>
+        },
+        {
+            name:"successMessage",
+            type:"string",
+            default:"",
+            description:<p>The success message when the input value passed all validation rules.</p>
         },
         {
             name:"inline",
             type:"boolean",
             default:<code>true</code>,
-            description:"Display radio buttons inline or stacked."
+            description:"Display check box inline or stacked."
         },
         {
             name:"containerStyle",
@@ -33,27 +47,36 @@ export default class CheckBoxApi extends Component {
             description:<p>Style object for the wrapper <code>div</code>.</p>
         },
         {
-            name:"valueSelected",
+            name:"name",
             type:"string",
             default:"",
-            description:"The value of current selected radio button"
+            description:<p>The <code>name</code> attribute for the input.</p>,
+            required:true
         },
         {
-            name:"defaultValue",
+            name:"id",
             type:"string",
             default:"",
-            description:"The default checked radio button value"
+            description:"The id for the checkbox input",
+            required:true
+        },
+        {
+            name:"label",
+            type:"string",
+            default:"",
+            description:"The label for the checkbox input",
+            required:true
         },
         {
             name:"onChange",
             type:"function",
             default:"",
             description:<div>
-                            <p>Callback function evoked when the radio button value changed</p>
+                            <p>Callback function evoked when the checkbox value changed</p>
                             Signature: <code>(event, value) => void</code>
                             <ul>
-                                <li><i>event:</i> Change event targeting the checked radio button </li>
-                                <li><i>value:</i> The value of checked radio button</li>
+                                <li><i>event:</i> Change event targeting the checkbox </li>
+                                <li><i>value:</i> The value of checkbox</li>
                             </ul>
                         </div>
         },
@@ -82,18 +105,30 @@ export default class CheckBoxApi extends Component {
                     <h4>Checkbox</h4>
                     <hr/>
                     <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
-                        <h5>Controlled Components with one disabled option</h5>
-                        <h5 className="mt-5">Stacked layout</h5>
+                        <h5 className="mt-2">Stacked</h5>
                         <div className="form-group">
-                            <Checkbox name="check1" label="Check #1" id="check1" required />
-                            <Checkbox name="check2" label="Check #2" id="check2" required />
-                            <Checkbox name="check3" label="Check #3" id="check3" required />
+                            <Checkbox name="check1" label="Check #1" id="check1" 
+                                required errorMessage="Please check this box"
+                                value={this.state.check1}
+                                onChange={this.handleChange}
+                            />
+                            <Checkbox name="check2" label="Check #2" id="check2"
+                                 required successMessage="Looks Good!"
+                                 value={this.state.check2}
+                                 onChange={this.handleChange}
+                            />
                         </div>
-                        <h5 className="mt-5">Inline layout</h5>
+                        <h5 className="mt-5">Inline</h5>
                         <div className="form-group">
-                            <Checkbox name="check4" label="Check #4" required inline />
-                            <Checkbox name="check5" label="Check #5" required inline/>
-                            <Checkbox name="check6" label="Check #6" required inline/>
+                            <Checkbox name="check3" label="Check #3" id="check3" 
+                                value={this.state.check3}
+                                required inline onChange={this.handleChange} />
+                            <Checkbox name="check4" label="Check #4" id="check4" 
+                                value={this.state.check4}
+                                required inline onChange={this.handleChange} />
+                            <Checkbox name="check5" label="Check #5" id="check5" 
+                                value={this.state.check5}
+                                required inline disabled />
                         </div>
                         <div className="form-group">
                             <button className="btn btn-primary">Submit</button>
@@ -105,11 +140,15 @@ export default class CheckBoxApi extends Component {
                         <code className="lang-javascript" style={{height:800}}>
                             {`
 import React, { Component } from 'react'
-import { ValidationForm, Radio } from 'react-bootstrap4-form-validation';
+import { ValidationForm, Checkbox } from 'react-bootstrap4-form-validation';
 
-class RadioGroupDemo extends Component {
+class CheckBoxApi extends Component {
     state = {
-        pet: ""
+        check1:false,
+        check2:true,
+        check3:false,
+        check4:true,
+        check5:true
     }
 
     handleChange = (e, value) => {
@@ -132,41 +171,30 @@ class RadioGroupDemo extends Component {
             <section>
                 //Controlled Components
                 <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
+                    //Stacked
                     <div className="form-group">
-                        <label>Select your pet</label>
-                        <Radio.RadioGroup name="pet" required errorMessage="Please select your pet" valueSelected={this.state.pet}
-                            onChange={this.handleChange}>
-                            <Radio.RadioItem id="dog" label="Dog" value="dog" />
-                            <Radio.RadioItem id="cat" label="Cat" value="cat" />
-                            <Radio.RadioItem id="fish" label="Fish" value="fish" />
-                            <Radio.RadioItem id="tyrannosaurus" label="Tyrannosaurus" value="tyrannosaurus" disabled/>
-                        </Radio.RadioGroup>
+                        <Checkbox name="check1" label="Check #1" id="check1" 
+                            required errorMessage="Please check this box"
+                            value={this.state.check1}
+                            onChange={this.handleChange}
+                        />
+                        <Checkbox name="check2" label="Check #2" id="check2"
+                            required successMessage="Looks Good!"
+                            value={this.state.check2}
+                            onChange={this.handleChange}
+                        />
                     </div>
+                    //Inline
                     <div className="form-group">
-                        <label>Choose your mode of transport</label>
-                        <Radio.RadioGroup name="transport" required valueSelected={this.state.transport}
-                            inline={false}
-                            onChange={this.handleChange}>
-                            <Radio.RadioItem id="air" label="Air" value="air" />
-                            <Radio.RadioItem id="water" label="Water" value="water" />
-                            <Radio.RadioItem id="land" label="Land" value="land" />
-                        </Radio.RadioGroup>
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Submit</button>
-                    </div>
-                </ValidationForm>
-
-                //Uncontrolled Components
-                <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
-                    <div className="form-group">
-                        <label>Select your food</label>
-                        <Radio.RadioGroup name="food" required errorMessage="Please select your food" 
-                            defaultValue="pizza">
-                            <Radio.RadioItem id="pizza" label="Pizza" value="pizza" />
-                            <Radio.RadioItem id="hotdog" label="Hotdog" value="hotdog" />
-                            <Radio.RadioItem id="rice" label="Rice" value="rice" />
-                        </Radio.RadioGroup>
+                        <Checkbox name="check3" label="Check #3" id="check3" 
+                            value={this.state.check3}
+                            required inline onChange={this.handleChange} />
+                        <Checkbox name="check4" label="Check #4" id="check4" 
+                            value={this.state.check4}
+                            required inline onChange={this.handleChange} />
+                        <Checkbox name="check5" label="Check #5" id="check5" 
+                            value={this.state.check5}
+                            required inline disabled />
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Submit</button>

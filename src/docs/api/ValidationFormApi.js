@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ValidationForm, TextInput, FileInput, SelectGroup, Checkbox } from "../../../lib";
+import { ValidationForm, TextInput, TextInputGroup, FileInput, SelectGroup, Checkbox } from "../../../lib";
 import { initCodeSyntaxHighlight, InfoBox, PropertiesTable } from '../index'
 import { Link } from 'react-router-dom';
 
@@ -117,7 +117,10 @@ export default class ValidationFormApi extends Component{
 
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <TextInput name="email" id="email" type="email" required/>
+                            <TextInputGroup name="email" id="email" type="email" 
+                                prepend={<span className="input-group-text">@</span>}
+                                successMessage="Looks good!"
+                                required/>
                         </div>
 
                         <div className="form-group">
@@ -156,7 +159,7 @@ export default class ValidationFormApi extends Component{
                     </div>
 
                     <InfoBox>
-                            To make <code>ValidationForm</code> to work, the <code>name</code> attribute is required for all form controls for internal mapping.
+                            To make <code>ValidationForm</code> to work, the <code>name</code> attribute is required for all form controls.
                     </InfoBox>
 
                     <h5>Reset form</h5>
@@ -164,8 +167,8 @@ export default class ValidationFormApi extends Component{
                     By default this function only reset the <b>validation state</b> (error message, classes...), since most of the time
                     you have controlled form components and you can reset the state to reset the values.</p>
 
-                    <p className="mt-2">However, you can pass a boolean flag to <code>resetValidationState</code> to also reset the <b>DOM node</b> value for uncontrolled components</p>
-                    <p>Check the code at right to see how to reset the form validation state</p>
+                    <p className="mt-2">However, you can pass a boolean flag to <code>resetValidationState</code> to also reset the <b>DOM node</b> value for uncontrolled components.</p>
+                    <p>Check the code at right to see how to reset the form validation state.</p>
                   
                 </div>
                 <div className="col-md-7">
@@ -173,7 +176,7 @@ export default class ValidationFormApi extends Component{
                         <code className="lang-javascript" style={{height:800}}>
 {`
 import React, { Component } from 'react'
-import { ValidationForm, TextInput, FileInput, SelectGroup, Checkbox } from "react-bootstrap4-form-validation";
+import { ValidationForm, TextInput, TextInputGroup, FileInput, SelectGroup, Checkbox } from "react-bootstrap4-form-validation";
 
 class ValidationFormDemo extends Component {
     constructor(props){
@@ -217,7 +220,10 @@ class ValidationFormDemo extends Component {
 
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
-                    <TextInput name="email" id="email" type="email" required/>
+                    <TextInputGroup name="email" id="email" type="email" 
+                                prepend={<span className="input-group-text">@</span>}
+                                successMessage="Looks good!"
+                                required />
                 </div>
 
                 <div className="form-group">

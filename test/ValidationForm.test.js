@@ -57,7 +57,7 @@ describe('<ValidationForm />', () => {
             <ValidationForm onSubmit={(e, formData) => mockCallback(formData)}>
                 <TextInput name="age" value="16" type="number"/>
                 <TextInput name="firstName" value="john" id="firstName"/>
-                <Checkbox name="isSubscribe" label="isSubscribe" id="isSubscribe" checked/>
+                <Checkbox name="isSubscribe" label="isSubscribe" id="isSubscribe" defaultChecked={true}/>
                 <SelectGroup name="color" value="red">
                     <option value="red">Red</option>
                 </SelectGroup>

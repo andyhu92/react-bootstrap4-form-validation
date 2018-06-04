@@ -119,7 +119,7 @@ export class BaseFormControl extends React.Component {
     //displayBlock for radio group structure
     displaySuccessMessage(displayBlock) {
         return (!this.state.isPristine && !this.state.errorMessage && this.props.successMessage) ?
-            <div className={"valid-feedback " + (displayBlock?"d-block":"")}>{this.props.successMessage}</div> : null;
+            <div className={"valid-feedback" + (displayBlock?" d-block":"")}>{this.props.successMessage}</div> : null;
     }
 
     checkError = (e) => {
@@ -361,7 +361,6 @@ export class SelectGroup extends BaseFormControl {
     }
     render() {
         let domProps = this.filterProps();
-        console.log(domProps)
         return (
             <div>
                 <select className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}
@@ -388,7 +387,9 @@ export class Checkbox extends BaseFormControl {
         label: PropTypes.string.isRequired,
         containerStyle: PropTypes.object,
         inline: PropTypes.bool,
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        value:PropTypes.bool,
+        defaultChecked: PropTypes.bool
     }
 
     handleChange = (e) => {
@@ -399,10 +400,10 @@ export class Checkbox extends BaseFormControl {
 
     render() {
         let props = this.filterProps();
-        let { label, inline, containerStyle, className, ...domProps } = props;
+        let { label, inline, containerStyle, className, checked, ...domProps } = props;
         return (
             <div className={"form-check " + (inline ? "form-check-inline" : "")} style={containerStyle}>
-                <input type="checkbox" className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} checked={this.props.value} />
+                <input type="checkbox" className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} checked={this.props.value} defaultChecked={this.props.defaultChecked}/>
                 <label className="form-check-label" htmlFor={domProps.id}>
                     {this.props.label}
                 </label>

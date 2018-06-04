@@ -43,8 +43,8 @@ describe("<SelectGroup />", () => {
         const wrapper = mount(
         <ValidationForm onSubmit={doNothing}>
             <SelectGroup name="color" required>
-            <option value="">-- Select Color -- </option>
-            <option value="red">Red</option>
+                <option value="">-- Select Color -- </option>
+                <option value="red">Red</option>
             </SelectGroup>
         </ValidationForm>
       )
@@ -73,5 +73,35 @@ describe("<SelectGroup />", () => {
         wrapper.find('select').getDOMNode().value = "red";
         wrapper.find('select').simulate("change");
         expect(wrapper.containsMatchingElement(successMessage)).toBe(true);
+    });
+
+    it('should work properly for controlled component', () => {
+        const mockOnChange = jest.fn();
+        const wrapper = mount(
+            <ValidationForm onSubmit={doNothing}>
+                <SelectGroup name="color" required successMessage="Looks good!" value="" onChange={mockOnChange}>
+                    <option value="">-- Select Color -- </option>
+                    <option value="red">Red</option>
+                </SelectGroup>
+            </ValidationForm>
+        )
+        wrapper.find('select').simulate("change", { target: { value: "red" }});
+        expect(mockOnChange.mock.calls.length).toBe(1);
+        expect(mockOnChange.mock.calls[0][0].target.value).toBe("red");
+    });
+
+    it('should work properly for uncontrolled component', () => {
+        const mockOnSubmit = jest.fn();
+        const wrapper = mount(
+            <ValidationForm onSubmit={mockOnSubmit}>
+                <SelectGroup name="color" required successMessage="Looks good!" defaultValue="red">
+                    <option value="">-- Select Color -- </option>
+                    <option value="red">Red</option>
+                </SelectGroup>
+            </ValidationForm>
+        )
+        wrapper.find('form').simulate("submit");
+        expect(mockOnSubmit.mock.calls.length).toBe(1);
+        expect(mockOnSubmit.mock.calls[0][1]).toEqual({ color: "red"});
     });
 })

@@ -47,6 +47,18 @@ export default class CheckBoxApi extends Component {
             description:<p>Style object for the wrapper <code>div</code>.</p>
         },
         {
+            name:"value",
+            type:"boolean",
+            default:"",
+            description:<p>The value of underlying input checkbox, used for controlled component.</p>
+        },
+        {
+            name:"defaultChecked",
+            type:"boolean",
+            default:<code>false</code>,
+            description:<p>The default checked value for underlying input checkbox, used for uncontrolled component.</p>,
+        },
+        {
             name:"name",
             type:"string",
             default:"",
@@ -206,7 +218,6 @@ class CheckBoxDemo extends Component {
         )
     }
 }
-
                             `}
                         </code>
                     </pre>

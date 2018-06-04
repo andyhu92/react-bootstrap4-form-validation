@@ -94,6 +94,17 @@ export default class SelectGroupApi extends Component {
                             </SelectGroup>
                         </div>
                         <div className="form-group">
+                            <label htmlFor="transport">Select mode of transport</label>
+                            <SelectGroup name="transport" id="transport"
+                                required errorMessage="Please select a mode."
+                                defaultValue="air">
+                                <option value="">--- Please select ---</option>
+                                <option value="air">Air</option>
+                                <option value="land">Land</option>
+                                <option value="water">Water</option>
+                            </SelectGroup>
+                        </div>
+                        <div className="form-group">
                             <button className="btn btn-primary">Submit</button>
                         </div>
                     </ValidationForm>

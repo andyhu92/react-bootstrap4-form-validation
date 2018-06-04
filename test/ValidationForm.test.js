@@ -30,11 +30,11 @@ describe('<ValidationForm />', () => {
                 <TextInput name="age"/>
                 <TextInput name="firstName" required id="firstName"/>
             </ValidationForm>)
-        
+
         let fakeFocus = jest.fn();
         wrapper.find("#firstName").at(1).getDOMNode().focus = fakeFocus
         wrapper.find("form").simulate("submit");
-            
+
         expect(fakeFocus).toHaveBeenCalled();
     })
 
@@ -44,30 +44,34 @@ describe('<ValidationForm />', () => {
                 <TextInput name="age"/>
                 <TextInput name="firstName" required id="firstName"/>
             </ValidationForm>)
-        
+
         let fakeFocus = jest.fn();
         wrapper.find("#firstName").at(1).getDOMNode().focus = fakeFocus
         wrapper.find("form").simulate("submit");
         expect(fakeFocus).not.toHaveBeenCalled();
     })
 
-    // it('should serialize form data correctly', () => {
-    //     const mockCallback = jest.fn();
-    //     const wrapper = mount(
-    //         <ValidationForm onSubmit={mockCallback}>
-    //             <TextInput name="age" value="16" type="number"/>
-    //             <TextInput name="firstName" value="john" id="firstName"/>
-    //             <Checkbox name="isSubscribe" label="isSubscribe" id="isSubscribe"/>
-    //             <SelectGroup name="color" value="red">
-    //                 <option value="red">Red</option>
-    //             </SelectGroup>
-    //             <Radio.RadioGroup name="gender" value="male">
-    //                 <Radio.RadioItem value="male" label="Male" id="male"/>
-    //                 <Radio.RadioItem value="female" label="Female" id="female"/>
-    //             </Radio.RadioGroup>
-    //         </ValidationForm>)
+    it('should serialize form data correctly', (done) => {
+        const mockCallback = jest.fn();
+        const wrapper = mount(
+            <ValidationForm onSubmit={(e, formData) => mockCallback(formData)}>
+                <TextInput name="age" value="16" type="number"/>
+                <TextInput name="firstName" value="john" id="firstName"/>
+                <Checkbox name="isSubscribe" label="isSubscribe" id="isSubscribe" checked/>
+                <SelectGroup name="color" value="red">
+                    <option value="red">Red</option>
+                </SelectGroup>
+            </ValidationForm>)
 
-        
-    //     expect(fakeFocus).not.toHaveBeenCalled();
-    // })
+        wrapper.find("form").simulate("submit");
+        mockCallback({});
+        expect(mockCallback.mock.calls[0][0]).toEqual(
+            {
+                age: "16",
+                firstName: "john",
+                isSubscribe: true,
+                color: "red",
+            });
+        done();
+    })
 });

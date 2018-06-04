@@ -69,7 +69,7 @@ export class BaseFormControl extends React.Component {
         let defaultErrorMessage = this.props.defaultErrorMessage || {};
         //If string was passed to errorMessage, default to required error Message
         if (typeof (errorMessage) === "string") errorMessage = { required: errorMessage };
-        errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, defaultErrorMessage, errorMessage); 
+        errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, defaultErrorMessage, errorMessage);
         let input = this.getInputRef();
         if (input) {
             let validityState = input.validity;
@@ -233,7 +233,7 @@ class RadioGroup extends BaseFormControl {
     }
 
     getInputRef(){
-        let inputRef = document.querySelectorAll(`[name=${this.props.name}]`)[0];
+        let inputRef = window.document.querySelectorAll(`[name=${this.props.name}]`)[0];
         return inputRef;
     }
 
@@ -287,7 +287,7 @@ class RadioItem extends Component{
 
     render () {
         let { checkError, containerStyle, containerClassName, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
-        let checkProps = defaultValue ?  { defaultChecked: this.props.value === defaultValue } 
+        let checkProps = defaultValue ?  { defaultChecked: this.props.value === defaultValue }
         :  { checked : this.props.value === valueSelected, onChange : this.onChange };
         return (
             <div className={containerClassName + " form-check " + (inline ? "form-check-inline":"")} style={containerStyle}>

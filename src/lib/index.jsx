@@ -318,15 +318,13 @@ export class FileInput extends BaseFormControl {
         className: "form-control",
     }
 
-    handleChange = () => {
+    checkFileError = (file) => {
         let { maxFileSize, fileType, errorMessage = {} } = this.props;
         errorMessage = Object.assign(ValidationForm.defaultErrorMessage, errorMessage);
-        const inputRef = this.getInputRef();
-        const file = inputRef.files[0];
-        if (!file) return;
         let limit = maxFileSize ? parseFileSize(maxFileSize) : null;
         let newErrorMessage = "";
         let fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1).toLowerCase().trim();
+        fileType = fileType.map(type => type.toLowerCase().trim());
         if (fileType.length > 0 && !fileType.includes(fileExtension)) {
             newErrorMessage = errorMessage["fileType"];
         } else if (limit && file.size > limit) {
@@ -334,7 +332,16 @@ export class FileInput extends BaseFormControl {
         } else {
             newErrorMessage = "";
         }
+        const inputRef = this.getInputRef();
         inputRef.setCustomValidity(newErrorMessage);
+    }
+
+    handleChange = (e) => {
+        const inputRef = this.getInputRef();
+        const file = inputRef.files[0];
+        if(this.props.onChange) this.props.onChange(e, file);
+        if (!file) return this.checkError();
+        this.checkFileError(file);
         this.checkError();
     }
 

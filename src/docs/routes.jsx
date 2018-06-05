@@ -5,6 +5,7 @@ import ValidationFormApi from './api/ValidationFormApi';
 import RadioGroupApi from './api/RadioGroupApi';
 import CheckBoxApi from './api/CheckBoxApi';
 import SelectGroupApi from './api/SelectGroupApi';
+import FileInputApi from './api/FileInputApi';
 
 export default {
     example: {
@@ -27,7 +28,7 @@ export default {
             { pathname:'radio-group', text:"RadioGroup", component: RadioGroupApi},
             { pathname:'check-box', text:"Checkbox", component: CheckBoxApi},
             { pathname:'select-group', text:"SelectGroup", component: SelectGroupApi},
-            { pathname:'file-input', text:"FileInput"},
+            { pathname:'file-input', text:"FileInput", component:FileInputApi},
         ]
     }
 }

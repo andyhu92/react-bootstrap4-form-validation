@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Radio /> should match snapshot 1`] = `
+<div
+  class="test"
+  style="width:100px"
+>
+  <div
+    class=" form-check form-check-inline"
+  >
+    <input
+      class="form-check-input"
+      id="a"
+      name="sample"
+      required=""
+      type="radio"
+      value="a"
+    />
+    <label
+      class="form-check-label"
+      for="a"
+    >
+      a
+    </label>
+  </div>
+  <div
+    class=" form-check form-check-inline"
+  >
+    <input
+      class="form-check-input"
+      id="b"
+      name="sample"
+      required=""
+      style="margin:50px"
+      type="radio"
+      value="b"
+    />
+    <label
+      class="form-check-label"
+      for="b"
+    >
+      b
+    </label>
+  </div>
+  <div
+    class=" form-check form-check-inline"
+  >
+    <input
+      class="form-check-input"
+      disabled=""
+      id="c"
+      name="sample"
+      required=""
+      type="radio"
+      value="c"
+    />
+    <label
+      class="form-check-label"
+      for="c"
+    >
+      c
+    </label>
+  </div>
+</div>
+`;

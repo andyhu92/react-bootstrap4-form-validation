@@ -2,6 +2,7 @@ import React from 'react';
 import { ValidationForm, TextInput } from '../lib'
 import { shallow, render, mount } from 'enzyme';
 import toJson from "enzyme-to-json";
+import validator from 'validator';
 
 describe("<TextInput />", () => {
     let domProps = {
@@ -125,6 +126,53 @@ describe("<TextInput />", () => {
         
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
         done();
-    })
+    });
+
+    it('should support custom validator (input)', (done) => {
+        let errMsg = "Please enter a valid email";
+        const wrapper = mount(
+            <ValidationForm onSubmit={doNothing}>
+                <TextInput name="email" type="email" 
+                    validator={validator.isEmail}
+                    errorMessage={{validator: errMsg}}
+                  />
+            </ValidationForm>
+        )
+        let errorMessage = <div className="invalid-feedback">{errMsg}</div>
+        let input = wrapper.find("input");
+        input.getDOMNode().value="a";
+        input.simulate('change');
+        expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
+
+        input.getDOMNode().value="test@test.com";
+        input.simulate('change');
+        
+        expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
+        done();
+    });
+
+    it('should support custom validator (textarea)', (done) => {
+        let errMsg = "Please enter a valid email";
+        const wrapper = mount(
+            <ValidationForm onSubmit={doNothing}>
+                <TextInput name="email" 
+                    validator={validator.isEmail}
+                    multiline
+                    errorMessage={{validator: errMsg}}
+                  />
+            </ValidationForm>
+        )
+        let errorMessage = <div className="invalid-feedback">{errMsg}</div>
+        let input = wrapper.find("textarea");
+        input.getDOMNode().value="a";
+        input.simulate('change');
+        expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
+
+        input.getDOMNode().value="test@test.com";
+        input.simulate('change');
+        
+        expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
+        done();
+    });
 
 })

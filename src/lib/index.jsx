@@ -181,7 +181,7 @@ export class TextInput extends BaseFormControl {
     }
     render() {
         let props = this.filterProps();
-        let { multiline, successMessage, ...domProps } = props;
+        let { multiline, successMessage, validator, ...domProps } = props;
         return (
             <div>
                 {multiline ?

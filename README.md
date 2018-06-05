@@ -1,4 +1,4 @@
-# React Bootstrap4 Validation Form
+# React Bootstrap4 Form Validation
 
 React components for [HTML5 Constraint validation API](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation) and [Bootstrap4](http://getbootstrap.com/) form components.
 
@@ -6,8 +6,7 @@ If you happen to use React, Bootstrap4 and want to add some validation to your f
 
 ## Install
 
-Release soon
-~~`npm install react-bootstrap4-form-validation --save`~~
+`npm install react-bootstrap4-form-validation --save`
 
 ## Develop
 
@@ -22,3 +21,7 @@ Release soon
 ## Demo & Documentation
 
 https://andyhu92.github.io/react-bootstrap4-form-validation/#/
+
+## Licence
+
+MIT

@@ -1,6 +1,6 @@
 import BasicUsage from './examples/basicUsage';
 import ErrorMessage from './examples/errorMessage';
-import FullExample from './examples/fullExample';
+import CustomValidation from './examples/CustomValidation';
 import ValidationFormApi from './api/ValidationFormApi';
 import TextInputApi from './api/TextInputApi';
 import TextInputGroupApi from './api/TextInputGroupApi';
@@ -16,7 +16,7 @@ export default {
         routes:[
             { pathname:'basic-usage', text:'Basic Usage', component: BasicUsage },
             { pathname:'error-message', text:'Error Message', component: ErrorMessage },
-            { pathname:'custom-validation-control', text:'Custom Validation Control'},
+            { pathname:'custom-validation-control', text:'Custom Validation Control', component: CustomValidation},
         ]
     },
     api: {

@@ -36,7 +36,7 @@ export default class FileInputDemo extends Component {
         },
         {
             name:"errorMessage",
-            type:"string || object",
+            type:"string | object",
             default:"",
             description:<div>The error message for file input. 
                 <p>If pass as <code>string</code>, the message will be used for <code>required </code>

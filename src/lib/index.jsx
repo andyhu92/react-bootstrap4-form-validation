@@ -199,16 +199,25 @@ export class TextInputGroup extends BaseFormControl {
     static defaultProps = {
         ...BaseFormControl.defaultProps,
         className: "form-control",
+        inputGroupClassName:"input-group"
+    }
+
+    static propTypes = {
+        className: PropTypes.string,
+        inputGroupClassName: PropTypes.string,
+        inputGroupStyle:PropTypes.object,
+        prepend: PropTypes.element,
+        append: PropTypes.element,
     }
     render() {
         let props = this.filterProps();
-        let { prepend, append, ...domProps } = props;
+        let { prepend, append, inputGroupClassName, inputGroupStyle, ...domProps } = props;
         return (
-            <div className="input-group">
+            <div className={inputGroupClassName} style={inputGroupStyle}>
                 {prepend && <div className="input-group-prepend">{prepend}</div>}
                 <input {...domProps} className={this.props.className} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
                 {append && <div className="input-group-append">{append}</div>}
-                {this.state.errorMessage && <div className="invalid-feedback d-block">{this.state.errorMessage}</div>}
+                {this.displayErrorMessage()}
                 {this.displaySuccessMessage()}
             </div>
         )

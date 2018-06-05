@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextInputGroup /> should match snapshot 1`] = `
+<div
+  class="input-group"
+>
+  <div
+    class="input-group-prepend"
+  >
+    <span
+      class="input-group-text"
+    >
+      $
+    </span>
+  </div>
+  <input
+    class="custom-class"
+    data-custom="5"
+    id="firstName"
+    name="firstName"
+    required=""
+    style="color:red;font-size:16px"
+  />
+  <div
+    class="invalid-feedback"
+  />
+</div>
+`;

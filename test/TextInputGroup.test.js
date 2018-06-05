@@ -1,10 +1,10 @@
 import React from 'react';
-import { ValidationForm, TextInput } from '../lib'
+import { ValidationForm, TextInputGroup } from '../lib'
 import { shallow, render, mount } from 'enzyme';
 import toJson from "enzyme-to-json";
 import validator from 'validator';
 
-describe("<TextInput />", () => {
+describe("<TextInputGroup />", () => {
     let domProps = {
         id: "firstName",
         name:"firstName",
@@ -17,21 +17,16 @@ describe("<TextInput />", () => {
         required:true
     }
 
-    it('should match snapshot when render as input', () => {
-        const wrapper = render(<TextInput {...domProps}/>)
-        expect(toJson(wrapper)).toMatchSnapshot();
-    });
-
-    it('should match snapshot when render as textarea', () => {
-        const wrapper = render(<TextInput {...domProps} multiline/>)
+    it('should match snapshot', () => {
+        const wrapper = render(<TextInputGroup {...domProps} prepend={<span className="input-group-text">$</span>}/>)
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     it('should display success message correctly when submit', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate>
-                <TextInput name="firstName" required
-                successMessage="Looks Good!" />
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
+                    prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         let input = wrapper.find("input");
@@ -45,8 +40,8 @@ describe("<TextInput />", () => {
     it('should display success message correctly when typing', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate>
-                <TextInput name="firstName" required
-                successMessage="Looks Good!" />
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
+                prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         let input = wrapper.find("input");
@@ -61,7 +56,8 @@ describe("<TextInput />", () => {
     it('should display error message correctly when submit', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate>
-                <TextInput name="firstName" required />
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
+                prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         wrapper.find('form').simulate('submit');
@@ -73,7 +69,8 @@ describe("<TextInput />", () => {
     it('should display error message correctly (immediate)', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate>
-                <TextInput name="firstName" required/>
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
+                prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         let input = wrapper.find("input");
@@ -89,7 +86,8 @@ describe("<TextInput />", () => {
     it('should display error message correctly (not-immediate)', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate={false}>
-                <TextInput name="firstName" required/>
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
+                prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         let errorMessage = <div className="invalid-feedback">{defaultErrorMessage.required}</div>
@@ -108,10 +106,10 @@ describe("<TextInput />", () => {
         let minLength=4;
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="firstName" 
+                <TextInputGroup name="amount" required successMessage="Looks Good!" 
                     minLength={minLength}
                     pattern="\d+"
-                  />
+                    prepend={<span className="input-group-text">$</span>}/>
             </ValidationForm>
         )
         let errorMessage = <div className="invalid-feedback">{defaultErrorMessage.minLength.replace("{minLength}", minLength)}</div>
@@ -128,11 +126,11 @@ describe("<TextInput />", () => {
         done();
     });
 
-    it('should support custom validator (input)', (done) => {
+    it('should support custom validator', (done) => {
         let errMsg = "Please enter a valid email";
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" type="email" 
+                <TextInputGroup name="email" type="email" 
                     validator={validator.isEmail}
                     errorMessage={{validator: errMsg}}
                   />
@@ -151,35 +149,11 @@ describe("<TextInput />", () => {
         done();
     });
 
-    it('should support custom validator (textarea)', (done) => {
-        let errMsg = "Please enter a valid email";
-        const wrapper = mount(
-            <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" 
-                    validator={validator.isEmail}
-                    multiline
-                    errorMessage={{validator: errMsg}}
-                  />
-            </ValidationForm>
-        )
-        let errorMessage = <div className="invalid-feedback">{errMsg}</div>
-        let input = wrapper.find("textarea");
-        input.getDOMNode().value="a";
-        input.simulate('change');
-        expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
-
-        input.getDOMNode().value="test@test.com";
-        input.simulate('change');
-        
-        expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
-        done();
-    });
-
     it('should work properly for controlled component', () => {
         const mockOnChange = jest.fn();
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" 
+                <TextInputGroup name="email" 
                 onChange={mockOnChange}
             />
             </ValidationForm>
@@ -193,7 +167,7 @@ describe("<TextInput />", () => {
         const mockOnSubmit = jest.fn();
         const wrapper = mount(
             <ValidationForm onSubmit={mockOnSubmit}>
-                <TextInput name="email" 
+                <TextInputGroup name="email" 
                     value="test@test.com"
                 />
             </ValidationForm>

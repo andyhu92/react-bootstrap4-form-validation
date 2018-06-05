@@ -11,7 +11,9 @@ If you happen to use React, Bootstrap4 and want to add some validation to your f
 ## Develop
 
 `git clone https://github.com/andyhu92/react-bootstrap4-form-validation.git`
+
 `npm install`
+
 `npm start`
 
 ## Test

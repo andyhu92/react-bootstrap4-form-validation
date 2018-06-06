@@ -289,14 +289,15 @@ class RadioItem extends Component {
     }
 
     onChange = (e) => {
-        this.props.onChange(e, e.target.value);
+        if(this.props.onChange) this.props.onChange(e, e.target.value);
         this.props.checkError();
     }
 
     render() {
         let { checkError, containerStyle, containerClassName, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
-        let checkProps = defaultValue ? { defaultChecked: this.props.value === defaultValue }
-            : { checked: this.props.value === valueSelected, onChange: this.onChange };
+        let checkProps = (valueSelected !== undefined && onChange) ?
+            { checked: this.props.value === valueSelected, onChange: this.onChange } : { defaultChecked: this.props.value === defaultValue };
+
         return (
             <div className={containerClassName + " form-check " + (inline ? "form-check-inline" : "")} style={containerStyle}>
                 <input className="form-check-input" type="radio"

@@ -1,23 +1,95 @@
 import React from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { ValidationForm, TextInput, TextInputGroup, Radio, Checkbox, SelectGroup, FileInput } from '../lib/index';
 import './index.css';
 import './highlight/prism.css';
 import './highlight/prism';
 import Sidebar from './sideBar';
 import BasicUsage from './examples/basicUsage';
 import Routes from './routes';
+import validator from 'validator';
 
-function Home () {
-  return (
+class Home extends React.Component{
+  constructor(props){
+    super(props);
+    this.formRef = React.createRef();
+  }
+
+  resetForm = () => {
+    this.formRef.current.resetValidationState(true);
+  }
+
+  render () {
+    return (
     <div className="my-5">
       <h1>React Bootstrap4 Form Validation</h1>
-      <p>Simple React Components for form validation. Based on 
-        <a href='https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation' target="_blank"> HTML5 Constraint validation API</a> and 
+      <p>Simple React Components for form validation. Based on
+        <a href='https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation' target="_blank"> HTML5 Constraint validation API</a> and
         <a href='https://getbootstrap.com/docs/4.0/components/forms/#validation' target="_blank"> Bootstrap4 style.</a></p>
-      <code></code>
+      <ValidationForm onSubmit={(e, formData) => alert(JSON.stringify(formData, null, 2))} style={{maxWidth:800}} ref={this.formRef}>
+          <div className="form-group row">
+            <div className="col-md-6">
+              <label htmlFor="firstName">First name</label>
+              <TextInput name="firstName" id="firstName" required successMessage="Looks Good!" />
+            </div>
+            <div className="col-md-6">
+                <label htmlFor="lastName">Last name</label>
+                <TextInput name="lastName" id="lastName" required successMessage="Looks Good!"/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <div className="col-md-6">
+              <label htmlFor="email">Email</label>
+              <TextInput name="email" id="email" required
+              validator={validator.isEmail} errorMessage={{validator: "Pleas enter a valid email"}}
+              successMessage="Looks Good!" />
+            </div>
+            <div className="col-md-6">
+                <label htmlFor="amount">Amount</label>
+                <TextInputGroup name="amount" id="amount" type="number" required successMessage="Looks Good!"
+                  prepend={<span className="input-group-text">$</span>}/>
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col-md-6">
+              <label htmlFor="color">Color</label>
+              <SelectGroup name="color" id="color" required>
+                <option value="">-- Select color --</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+              </SelectGroup>
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="attachment">Attachment</label>
+              <FileInput name="attachment" id="attachment" required
+                errorMessage = {{required: "Please upload a file", fileType:"Only pdf or excel is allowed", maxFileSize: "Max file size is 120 kb"}}
+                fileType={["pdf","xlsx","xls"]}
+                maxFileSize="150 kb"/>
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Gender</label>
+            <Radio.RadioGroup name="gender" required>
+              <Radio.RadioItem id="male" label="Male" value="male"/>
+              <Radio.RadioItem id="female" label="Female" value="female"/>
+            </Radio.RadioGroup>
+          </div>
+          <div className="form-group">
+            <Checkbox label="Subscribe to newsletter" id="check"
+            required errorMessage="Oops...Please subscribe lol"/>
+          </div>
+          <div className="form-group">
+            <button className="btn btn-primary mr-3">Submit</button>
+            <button className="btn btn-secondary" type="button" onClick={this.resetForm}>Reset</button>
+          </div>
+
+      </ValidationForm>
     </div>
-  )
+    )
+  }
 }
 
 class Demo extends React.Component {

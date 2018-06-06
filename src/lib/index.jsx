@@ -24,7 +24,7 @@ export class BaseFormControl extends React.Component {
             isPristine: true,
             errorMessage: ""
         }
-        if (!React.createRef) this.inputRef = React.createRef();
+        if (React.createRef) this.inputRef = React.createRef();
         else this.inputRef = (element) => {
             //Before React 16.3
             this.inputRefLegacy = element;

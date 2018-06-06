@@ -79,6 +79,7 @@ class Home extends React.Component{
           </div>
           <div className="form-group">
             <Checkbox label="Subscribe to newsletter" id="check"
+            name="isSubscribe"
             required errorMessage="Oops...Please subscribe lol"/>
           </div>
           <div className="form-group">

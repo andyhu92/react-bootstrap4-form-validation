@@ -89,6 +89,7 @@ static defaultErrorMessage = {
     required: "This field is required",
     pattern: "Input value does not match the pattern",
     type: "Input value does not match the type",
+    step: "Step mismatch",
     minLength: "Please enter at least {minLength} characters",
     min: "Number is too low",
     max: "Number is too high",

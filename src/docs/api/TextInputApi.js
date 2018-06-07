@@ -38,6 +38,12 @@ export default class TextInputApi extends Component {
             description:"Maxlength for the input value"
         },
         {
+            name:"step",
+            type:"number",
+            default:"1",
+            description:<p><code>step</code> for input with type <code>number</code></p>
+        },
+        {
             name:"pattern",
             type:"string",
             default:"",

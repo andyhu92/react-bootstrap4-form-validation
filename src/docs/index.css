@@ -1,5 +1,5 @@
 header, section, footer, aside, nav, main, article, figure {
-    display: block; 
+    display: block;
 }
 
 code{
@@ -55,12 +55,54 @@ aside a:hover{
     color:white;
 }
 
+.menu-brand, .toggle-menu{
+    display:none;
+}
+
 @media screen and (max-width:768px){
+    .nav-bar, .fork{
+        display:none;
+    }
+
+    .menu-brand{
+        text-decoration: none !important;
+        margin-left:50px;
+        display:inline;
+    }
+
+    a.brand{
+        display: none !important;
+    }
+
     aside{
         width:100%;
-        position:static;
+        height:80px;
     }
+
+    aside.active{
+        transition:height 0.2s ease-in;
+        height:100%;
+    }
+
+    aside.active .nav-bar{
+        display:block;
+        margin-top:-50px;
+    }
+
     section{
         padding-left: 15px !important;
+        margin-top:100px;
+    }
+
+    .toggle-menu{
+        display: inline;
+        background: #eee;
+        margin-left:10px;
+        padding-bottom:0px;
+    }
+
+    .toggle-menu:hover{
+        background:white;
     }
 }
+

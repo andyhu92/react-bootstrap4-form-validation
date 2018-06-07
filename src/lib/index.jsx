@@ -24,7 +24,7 @@ export class BaseFormControl extends React.Component {
             isPristine: true,
             errorMessage: ""
         }
-        if (!React.createRef) this.inputRef = React.createRef();
+        if (React.createRef) this.inputRef = React.createRef();
         else this.inputRef = (element) => {
             //Before React 16.3
             this.inputRefLegacy = element;
@@ -59,6 +59,7 @@ export class BaseFormControl extends React.Component {
         let map = {
             valueMissing: "required",
             customError: "",
+            stepMismatch:"step",
             patternMismatch: "pattern",
             rangeUnderflow: "min",
             rangeOverflow: "max",
@@ -296,12 +297,13 @@ class RadioItem extends Component {
     render() {
         let { checkError, containerStyle, containerClassName, label, inline, defaultValue, valueSelected, onChange, ...domProps } = this.props;
         let checkProps = (valueSelected !== undefined && onChange) ?
-            { checked: this.props.value === valueSelected, onChange: this.onChange } : { defaultChecked: this.props.value === defaultValue };
+            { checked: this.props.value === valueSelected } : { defaultChecked: this.props.value === defaultValue };
 
         return (
             <div className={containerClassName + " form-check " + (inline ? "form-check-inline" : "")} style={containerStyle}>
                 <input className="form-check-input" type="radio"
                     {...checkProps }
+                    onChange={this.onChange}
                     {...domProps} />
                 <label className="form-check-label" htmlFor={this.props.id}>
                     {label}
@@ -401,6 +403,7 @@ export class Checkbox extends BaseFormControl {
     }
 
     static propTypes = {
+        name:PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         containerStyle: PropTypes.object,
         inline: PropTypes.bool,
@@ -452,6 +455,7 @@ export class ValidationForm extends React.Component {
         required: "This field is required",
         pattern: "Input value does not match the pattern",
         type: "Input value does not match the type",
+        step: "Step mismatch",
         minLength: "Please enter at least {minLength} characters",
         min: "Number is too low",
         max: "Number is too high",
@@ -472,9 +476,11 @@ export class ValidationForm extends React.Component {
 
     isBaseFormControl(element) {
         if (typeof element !== "function") return false;
-        while (element.__proto__ !== Object.prototype) {
-            if (element.__proto__ === BaseFormControl) return true;
-            element = element.__proto__;
+        while (Object.getPrototypeOf(element) !== Object.prototype) {
+            if (Object.getPrototypeOf(element) === BaseFormControl) {
+                return true;
+            }
+            element = Object.getPrototypeOf(element);
         }
         return false;
     }

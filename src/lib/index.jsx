@@ -108,13 +108,12 @@ export class BaseFormControl extends React.Component {
                 }
             }
 
-
             this.setState({ errorMessage: newErrorMessage });
         }
     }
 
     displayErrorMessage() {
-        return <div className="invalid-feedback">{this.state.errorMessage}</div>;
+        return this.state.errorMessage ? <div className="invalid-feedback">{this.state.errorMessage}</div>:null;
     }
 
     //displayBlock for radio group structure
@@ -332,7 +331,7 @@ export class FileInput extends BaseFormControl {
 
     checkFileError = (file) => {
         let { maxFileSize, fileType, errorMessage = {} } = this.props;
-        errorMessage = Object.assign(ValidationForm.defaultErrorMessage, errorMessage);
+        errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, errorMessage);
         let limit = maxFileSize ? parseFileSize(maxFileSize) : null;
         let newErrorMessage = "";
         let fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1).toLowerCase().trim();

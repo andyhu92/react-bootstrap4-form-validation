@@ -10,9 +10,6 @@ exports[`<TextInput /> should match snapshot when render as input 1`] = `
     required=""
     style="color:red;font-size:16px"
   />
-  <div
-    class="invalid-feedback"
-  />
 </div>
 `;
 
@@ -25,9 +22,6 @@ exports[`<TextInput /> should match snapshot when render as textarea 1`] = `
     name="firstName"
     required=""
     style="color:red;font-size:16px"
-  />
-  <div
-    class="invalid-feedback"
   />
 </div>
 `;

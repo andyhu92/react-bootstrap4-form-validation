@@ -36,12 +36,16 @@ export class BaseFormControl extends React.Component {
         errorMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     }
 
+    static contextTypes = {
+        validationForm: PropTypes.object
+    }
+
     componentDidMount() {
-        this.props.attachToForm(this);
+        this.context.validationForm.attachToForm(this);
     }
 
     componentWillUnmount() {
-        this.props.detachFromForm(this);
+        this.context.validationForm.detachFromForm(this);
     }
 
     getInputRef() {
@@ -67,7 +71,7 @@ export class BaseFormControl extends React.Component {
         }
 
         let { errorMessage } = this.props;
-        let defaultErrorMessage = this.props.defaultErrorMessage || {};
+        let defaultErrorMessage = this.context.validationForm.defaultErrorMessage || {};
         //If string was passed to errorMessage, default to required error Message
         if (typeof (errorMessage) === "string") errorMessage = { required: errorMessage };
         errorMessage = Object.assign({}, ValidationForm.defaultErrorMessage, defaultErrorMessage, errorMessage);
@@ -143,13 +147,13 @@ export class BaseFormControl extends React.Component {
     }
 
     handleBlur = (e) => {
-        if (this.props.immediate) return;
+        if (this.context.validationForm.immediate) return;
         this.checkError();
     }
 
     handleChange = (e) => {
         if (this.props.onChange) this.props.onChange(e);
-        if (!this.props.immediate) return;
+        if (!this.context.validationForm.immediate) return;
         this.checkError();
     }
 
@@ -450,6 +454,10 @@ export class ValidationForm extends React.Component {
         onErrorSubmit: PropTypes.func
     }
 
+    static childContextTypes = {
+        validationForm: PropTypes.object,
+    };
+
     static defaultErrorMessage = {
         required: "This field is required",
         pattern: "Input value does not match the pattern",
@@ -473,6 +481,17 @@ export class ValidationForm extends React.Component {
         delete this.inputs[component.props.name]
     }
 
+    getChildContext = () => (
+        {
+          validationForm: {
+            attachToForm: this.attachToForm,
+            detachFromForm: this.detachFromForm,
+            immediate: this.props.immediate,
+            defaultErrorMessage: this.props.defaultErrorMessage
+          }
+        }
+      )
+
     isBaseFormControl(element) {
         if (typeof element !== "function") return false;
         while (Object.getPrototypeOf(element) !== Object.prototype) {
@@ -484,27 +503,28 @@ export class ValidationForm extends React.Component {
         return false;
     }
 
-    registerChildren(children) {
-        let newChildren = React.Children.map(children, (child) => {
-            //If child is our baseFormControl, then assign new props to it
-            if (!child) return child;
-            if (this.isBaseFormControl(child.type)) {
-                return React.cloneElement(child, {
-                    ...child.props,
-                    attachToForm: this.attachToForm,
-                    detachFromForm: this.detachFromForm,
-                    immediate: this.props.immediate,
-                    defaultErrorMessage: this.props.defaultErrorMessage
-                });
-            } else {
-                if (typeof child === 'string') return child;
-                return React.cloneElement(child, {
-                    children: (typeof child.props.children === "string") ? child.props.children : this.registerChildren(child.props.children)
-                });
-            }
-        });
-        return newChildren;
-    }
+    //Use context instead
+    // registerChildren(children) {
+    //     let newChildren = React.Children.map(children, (child) => {
+    //         //If child is our baseFormControl, then assign new props to it
+    //         if (!child) return child;
+    //         if (this.isBaseFormControl(child.type)) {
+    //             return React.cloneElement(child, {
+    //                 ...child.props,
+    //                 attachToForm: this.attachToForm,
+    //                 detachFromForm: this.detachFromForm,
+    //                 immediate: this.props.immediate,
+    //                 defaultErrorMessage: this.props.defaultErrorMessage
+    //             });
+    //         } else {
+    //             if (typeof child === 'string') return child;
+    //             return React.cloneElement(child, {
+    //                 children: (typeof child.props.children === "string") ? child.props.children : this.registerChildren(child.props.children)
+    //             });
+    //         }
+    //     });
+    //     return newChildren;
+    // }
 
     validateInputs() {
         for (let prop in this.inputs) {
@@ -609,7 +629,7 @@ export class ValidationForm extends React.Component {
             <form noValidate ref="form"
                 { ...domProps }
                 onSubmit={this.handleSubmit}>
-                {this.registerChildren(this.props.children)}
+                { this.props.children }
             </form>
         )
     }

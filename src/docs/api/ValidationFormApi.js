@@ -15,7 +15,7 @@ export default class ValidationFormApi extends Component{
             clearInputOnReset:false
         }
     }
-   
+
     properties = [
         {
             name:"onSubmit",
@@ -43,7 +43,7 @@ export default class ValidationFormApi extends Component{
                                 <li><i>event:</i> Submit event targeting the form <b>(preventDefault and stopPropagation has been called)</b></li>
                                 <li><i>formData:</i> Serialized form data object. Key will be the input name.</li>
                                 <li><i>errorInputs:</i> Object contains input with error. Useful when building validation summary.<br/>
-                                    <b>key:</b> input name. <b>value:</b> Reference to the wrapper form control component. 
+                                    <b>key:</b> input name. <b>value:</b> Reference to the wrapper form control component.
                                         You can get error message from <code>(control).state.errorMessage</code>
                                 </li>
                             </ul>
@@ -104,9 +104,9 @@ export default class ValidationFormApi extends Component{
             <div className="row">
                 <div className="col-md-5">
                     <h4>ValidationForm</h4>
-                    <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit} 
+                    <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}
                         ref={this.formRef}
-                        immediate={this.state.immediate} 
+                        immediate={this.state.immediate}
                         setFocusOnError={this.state.setFocusOnError}
                         defaultErrorMessage={{ required: "Please enter something."}}
                     >
@@ -117,7 +117,7 @@ export default class ValidationFormApi extends Component{
 
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <TextInputGroup name="email" id="email" type="email" 
+                            <TextInputGroup name="email" id="email" type="email"
                                 prepend={<span className="input-group-text">@</span>}
                                 successMessage="Looks good!"
                                 required/>
@@ -130,12 +130,12 @@ export default class ValidationFormApi extends Component{
                                 fileType={["pdf"]} maxFileSize="120 kb"/>
                         </div>
 
-                        <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" 
+                        <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter"
                             required errorMessage="Please check this..." />
 
                         <div className="form-group mt-3">
                             <button className="btn btn-primary">Submit</button>
-                            <button className="btn btn-default ml-2" type="button"
+                            <button className="btn btn-secondary ml-2" type="button"
                                 onClick={this.resetForm}>Reset</button>
                         </div>
                     </ValidationForm>
@@ -169,7 +169,7 @@ export default class ValidationFormApi extends Component{
 
                     <p className="mt-2">However, you can pass a boolean flag to <code>resetValidationState</code> to also reset the <b>DOM node</b> value for uncontrolled components.</p>
                     <p>Check the code at right to see how to reset the form validation state.</p>
-                  
+
                 </div>
                 <div className="col-md-7">
                     <pre>
@@ -208,9 +208,9 @@ class ValidationFormDemo extends Component {
 
     render () {
         return (
-            <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit} 
+            <ValidationForm onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}
                         ref={this.formRef}
-                        immediate={this.state.immediate} 
+                        immediate={this.state.immediate}
                         setFocusOnError={this.state.setFocusOnError}
                         defaultErrorMessage={{ required: "Please enter something."}} >
                 <div className="form-group">
@@ -220,7 +220,7 @@ class ValidationFormDemo extends Component {
 
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
-                    <TextInputGroup name="email" id="email" type="email" 
+                    <TextInputGroup name="email" id="email" type="email"
                                 prepend={<span className="input-group-text">@</span>}
                                 successMessage="Looks good!"
                                 required />
@@ -233,7 +233,7 @@ class ValidationFormDemo extends Component {
                             fileType={["pdf"]} maxFileSize="120 kb"/>
                 </div>
 
-                <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter" 
+                <Checkbox id="isSubscribe" name="isSubscribe" label="Subscribe to newsletter"
                     required errorMessage="Please check this..." />
 
                 <div className="form-group mt-3">

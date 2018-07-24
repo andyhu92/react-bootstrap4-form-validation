@@ -57,7 +57,7 @@ describe("<TextInput />", () => {
         done();
     })
 
-    
+
     it('should display error message correctly when submit', (done) => {
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing} immediate>
@@ -108,7 +108,7 @@ describe("<TextInput />", () => {
         let minLength=4;
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="firstName" 
+                <TextInput name="firstName"
                     minLength={minLength}
                     pattern="\d+"
                   />
@@ -123,7 +123,7 @@ describe("<TextInput />", () => {
         errorMessage = <div className="invalid-feedback">{defaultErrorMessage.pattern}</div>
         input.getDOMNode().value="abcd";
         input.simulate('change');
-        
+
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(true);
         done();
     });
@@ -132,7 +132,7 @@ describe("<TextInput />", () => {
         let errMsg = "Please enter a valid email";
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" type="email" 
+                <TextInput name="email" type="email"
                     validator={validator.isEmail}
                     errorMessage={{validator: errMsg}}
                   />
@@ -146,7 +146,7 @@ describe("<TextInput />", () => {
 
         input.getDOMNode().value="test@test.com";
         input.simulate('change');
-        
+
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
         done();
     });
@@ -155,7 +155,7 @@ describe("<TextInput />", () => {
         let errMsg = "Please enter a valid email";
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" 
+                <TextInput name="email"
                     validator={validator.isEmail}
                     multiline
                     errorMessage={{validator: errMsg}}
@@ -170,7 +170,7 @@ describe("<TextInput />", () => {
 
         input.getDOMNode().value="test@test.com";
         input.simulate('change');
-        
+
         expect(wrapper.containsMatchingElement(errorMessage)).toBe(false);
         done();
     });
@@ -179,7 +179,7 @@ describe("<TextInput />", () => {
         const mockOnChange = jest.fn();
         const wrapper = mount(
             <ValidationForm onSubmit={doNothing}>
-                <TextInput name="email" 
+                <TextInput name="email"
                 onChange={mockOnChange}
             />
             </ValidationForm>
@@ -193,7 +193,7 @@ describe("<TextInput />", () => {
         const mockOnSubmit = jest.fn();
         const wrapper = mount(
             <ValidationForm onSubmit={mockOnSubmit}>
-                <TextInput name="email" 
+                <TextInput name="email"
                     value="test@test.com"
                 />
             </ValidationForm>

@@ -548,7 +548,7 @@ export class ValidationForm extends React.Component {
                     value = inputRef.checked;
                     break;
                 case "radio":
-                    let radios = document.querySelectorAll(`[name=${name}]`);
+                    let radios = document.querySelectorAll(`[name='${name}']`);
                     for (let i = 0; i < radios.length; i++) {
                         if (radios[i].checked) {
                             value = radios[i].value;

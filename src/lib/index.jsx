@@ -245,7 +245,7 @@ class RadioGroup extends BaseFormControl {
     }
 
     getInputRef() {
-        let inputRef = window.document.querySelectorAll(`[name=${this.props.name}]`)[0];
+        let inputRef = window.document.querySelectorAll(`[name="${this.props.name}"]`)[0];
         return inputRef;
     }
 
@@ -548,7 +548,7 @@ export class ValidationForm extends React.Component {
                     value = inputRef.checked;
                     break;
                 case "radio":
-                    let radios = document.querySelectorAll(`[name='${name}']`);
+                    let radios = document.querySelectorAll(`[name="${this.props.name}"]`);
                     for (let i = 0; i < radios.length; i++) {
                         if (radios[i].checked) {
                             value = radios[i].value;

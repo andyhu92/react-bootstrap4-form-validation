@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap4-form-validation",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple React Components for form validation. Based on HTML5 Constraint validation API and Bootstrap4 style.",
   "main": "lib/index.js",
   "scripts": {
@@ -61,9 +61,9 @@
   },
   "author": "Cihang Hu <cihanghu@gmail.com>",
   "homepage": "https://github.com/andyhu92/react-bootstrap4-form-validation",
-  "bug":"https://github.com/andyhu92/react-bootstrap4-form-validation/issues",
+  "bug": "https://github.com/andyhu92/react-bootstrap4-form-validation/issues",
   "repository": {
-    "url":"https://github.com/andyhu92/react-bootstrap4-form-validation",
+    "url": "https://github.com/andyhu92/react-bootstrap4-form-validation",
     "type": "git"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap4-form-validation",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Simple React Components for form validation. Based on HTML5 Constraint validation API and Bootstrap4 style.",
   "main": "lib/index.js",
   "scripts": {

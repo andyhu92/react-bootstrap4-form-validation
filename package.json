@@ -61,9 +61,10 @@
   },
   "author": "Cihang Hu <cihanghu@gmail.com>",
   "homepage": "https://github.com/andyhu92/react-bootstrap4-form-validation",
+  "bug":"https://github.com/andyhu92/react-bootstrap4-form-validation/issues",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/andyhu92/react-bootstrap4-form-validation.git"
+    "url":"https://github.com/andyhu92/react-bootstrap4-form-validation",
+    "type": "git"
   },
   "dependencies": {
     "prop-types": "^15.6.1"

@@ -18,8 +18,5 @@ exports[`<CheckBox /> should match snapshot 1`] = `
     class="form-check-label"
     for="acknowledge"
   />
-  <div
-    class="invalid-feedback"
-  />
 </div>
 `;

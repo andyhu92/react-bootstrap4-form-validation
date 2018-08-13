@@ -21,8 +21,5 @@ exports[`<SelectGroup /> should match snapshot 1`] = `
       Red
     </option>
   </select>
-  <div
-    class="invalid-feedback"
-  />
 </div>
 `;

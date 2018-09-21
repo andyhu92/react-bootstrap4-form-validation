@@ -251,7 +251,10 @@ class RadioGroup extends BaseFormControl {
 
     mapRadioItems() {
         return React.Children.map(this.props.children, (child) => {
-            if (child.type !== RadioItem) throw new TypeError("Only RadioItem is allowed inside RadioGroup");
+            if (typeof child.type !== "function" || child.type.name !== RadioItem.name) {
+                console.warn("Only RadioItem is allowed inside RadioGroup");
+                return;
+            }
             return React.cloneElement(child, {
                 ...child.props,
                 inline: this.props.inline,

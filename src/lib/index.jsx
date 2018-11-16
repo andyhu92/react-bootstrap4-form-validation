@@ -187,14 +187,14 @@ export class TextInput extends BaseFormControl {
         let props = this.filterProps();
         let { multiline, successMessage, validator, ...domProps } = props;
         return (
-            <div>
+            <React.Fragment>
                 {multiline ?
                     <textarea className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur}></textarea> :
                     <input className={this.props.className} {...domProps} ref={this.inputRef} onChange={this.handleChange} onBlur={this.handleBlur} />
                 }
                 {this.displayErrorMessage()}
                 {this.displaySuccessMessage()}
-            </div>
+            </React.Fragment>
         )
     }
 }

@@ -1,27 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<TextInput /> should match snapshot when render as input 1`] = `
-<div>
-  <input
-    class="custom-class"
-    data-custom="5"
-    id="firstName"
-    name="firstName"
-    required=""
-    style="color:red;font-size:16px"
-  />
-</div>
+<input
+  class="custom-class"
+  data-custom="5"
+  id="firstName"
+  name="firstName"
+  required=""
+  style="color:red;font-size:16px"
+/>
 `;
 
 exports[`<TextInput /> should match snapshot when render as textarea 1`] = `
-<div>
-  <textarea
-    class="custom-class"
-    data-custom="5"
-    id="firstName"
-    name="firstName"
-    required=""
-    style="color:red;font-size:16px"
-  />
-</div>
+<textarea
+  class="custom-class"
+  data-custom="5"
+  id="firstName"
+  name="firstName"
+  required=""
+  style="color:red;font-size:16px"
+/>
 `;
